@@ -6,7 +6,7 @@ permalink: /about/
 author: matheusjorge
 ---
 
-<img class="img-rounded" src="/assets/img/icons/largetilepng" alt="Matheus Jorge" width="200">
+<img class="img-rounded" src="/assets/img/icons/largetile.png" alt="Matheus Jorge" width="200">
 
 # Sobre
 

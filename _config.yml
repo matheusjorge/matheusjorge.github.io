@@ -1,7 +1,7 @@
 # Site Settings
 name: Alexandr.IA
 title: Alexandr.IA
-use_logo: true
+use_logo: false
 description: Alexadr.IA é um blog em português destinado ao compartilhamento de conhecimento em ciência de dados e aprendizado de máquina
 tags:
   - blog

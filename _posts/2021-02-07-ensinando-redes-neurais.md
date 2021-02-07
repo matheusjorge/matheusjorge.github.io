@@ -3,7 +3,7 @@ date: 2021-02-07
 layout: post
 title: Ensinado Redes Neurais
 description: Segundo artigo da série sobre Redes Neurais. Apresentamos o conceito de gradiente e mostramos como podemos utilizá-lo como forma de otimizar funções. Também mostramos como essa aplicação é útil no treinamento de modelos, especificamente de redes neurais.
-image: {{ site.base_url }}/assets/img/posts/post2_ensinando_redes_neurais.jpg
+image: https://matheusjorge.github.io/assets/img/posts/post2_ensinando_redes_neurais.jpg
 category: 'redes neurais'
 math: true
 tags:

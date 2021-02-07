@@ -65,7 +65,7 @@ $$
 \end{bmatrix} 
 $$
 
-<p>Ótimo! Calculamos o nosso gradiente, vimos que ele é positivo e então temos que "andar" para a direita, como esperávamos. Mas quanto devemos andar? Vamos tentar dar um passo da magnitude do gradiente:<p>
+<p>Ótimo! Calculamos o nosso gradiente, vimos que ele é positivo e então temos que "andar" para a direita, como esperávamos. Mas quanto devemos andar? Vamos tentar dar um passo da magnitude do gradiente:</p>
 
 $$ |\nabla f(-4)| = 8 $$
 
@@ -75,7 +75,7 @@ Com isso vamos parar em $x=4$ .
 <img src="{{ site.baseurl }}/assets/img/uploads/redes_neurais_15.png" width="800px" height="400px">
 </center>
 
-<p>Hum... Não parece que melhorou muito. Ainda estamos com um valor $f(4)=16$, o mesmo que na posição anterior. E se calcularmos o gradiente de novo? <p>
+<p>Hum... Não parece que melhorou muito. Ainda estamos com um valor $f(4)=16$, o mesmo que na posição anterior. E se calcularmos o gradiente de novo? </p>
 
 $$
 \nabla f(4) = 
@@ -87,7 +87,7 @@ $$
 \end{bmatrix} 
 $$
 
-<p>Dessa vez o gradiente é negativo, logo temos que ir para a esquerda. Porém se dermos de novo um "passo" da magnitude do vetor gradiente, voltaríamos para $x=-4$, a nossa posição inicial. Parece que esse método não está levando a nenhum lugar, não é? Vamos tentar então uma outra abordagem. Ao invés da darmos um passo com a magnitude total do gradiente, vamos utilizar só uma porcentagem desse valor. Para testar, vamos fazer $10\%$. <p>
+<p>Dessa vez o gradiente é negativo, logo temos que ir para a esquerda. Porém se dermos de novo um "passo" da magnitude do vetor gradiente, voltaríamos para $x=-4$, a nossa posição inicial. Parece que esse método não está levando a nenhum lugar, não é? Vamos tentar então uma outra abordagem. Ao invés da darmos um passo com a magnitude total do gradiente, vamos utilizar só uma porcentagem desse valor. Para testar, vamos fazer $10\%$. </p>
 
 $$x^\prime = x + 0.1*|\nabla f(x)| = -4 + 0.1 * 8 = -3.2$$
 
@@ -95,7 +95,7 @@ $$x^\prime = x + 0.1*|\nabla f(x)| = -4 + 0.1 * 8 = -3.2$$
 <img src="{{ site.baseurl }}/assets/img/uploads/redes_neurais_16.png" width="800px" height="400px">
 </center>
 
-<p>Uou! Dessa vez conseguimos aumentar o valor da nossa função para $f(-3.2) = -10.24$. Parece promissor, mas vamos tentar mais uma vez.<p>
+<p>Uou! Dessa vez conseguimos aumentar o valor da nossa função para $f(-3.2) = -10.24$. Parece promissor, mas vamos tentar mais uma vez.</p>
 
 $$x^\prime = x + 0.1*|\nabla f(x)| = -3.2 + 0.1* 6.4 = -2.56$$
 
@@ -105,7 +105,7 @@ Ainda melhor! Agora temos $f(-2.56) = -6.55$.
 <img src="{{ site.baseurl }}/assets/img/uploads/redes_neurais_17.png" width="800px" height="400px">
 </center>
 
-Parece que essa abordagem de utilizar uma porcentagem da magnitude do gradiente funcionou muito bem e é exatamente essa técnica que vamos utilizar. Na verdade, essa porcentagem que utilizamos tem um nome muito especial: <b>taxa de aprendizagem</b> e a referenciamos pela letra grega $\alpha$. É ela quem controla o tamanho do passo que damos. Pudemos ver que se o passo for muito longo, como quando utilizamos o valor 1 ($100\%$), podemos nunca aumentar o valor ou, pior ainda, diminuí-lo. Mas e se a taxa de aprendizagem for muito pequena? Nesse caso não temos problema com a convergência, mas sim o tempo que leva para a atingirmos. Vamos supor que agora $\alpha = 0.01$ ou seja $1\%$.
+<p>Parece que essa abordagem de utilizar uma porcentagem da magnitude do gradiente funcionou muito bem e é exatamente essa técnica que vamos utilizar. Na verdade, essa porcentagem que utilizamos tem um nome muito especial: <b>taxa de aprendizagem</b> e a referenciamos pela letra grega $\alpha$. É ela quem controla o tamanho do passo que damos. Pudemos ver que se o passo for muito longo, como quando utilizamos o valor 1 ($100\%$), podemos nunca aumentar o valor ou, pior ainda, diminuí-lo. Mas e se a taxa de aprendizagem for muito pequena? Nesse caso não temos problema com a convergência, mas sim o tempo que leva para a atingirmos. Vamos supor que agora $\alpha = 0.01$ ou seja $1\%$.</p>
 
 $$x_1 = x_0 + 0.01*|\nabla f(x_0)| = -4 + 0.01*8 = -3.92$$
 

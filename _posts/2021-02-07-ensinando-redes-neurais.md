@@ -3,7 +3,7 @@ date: 2021-02-07
 layout: post
 title: Ensinado Redes Neurais
 description: Segundo artigo da série sobre Redes Neurais. Apresentamos o conceito de gradiente e mostramos como podemos utilizá-lo como forma de otimizar funções. Também mostramos como essa aplicação é útil no treinamento de modelos, especificamente de redes neurais.
-image: "{{ site.base_url }}/assets/img/posts/post2_ensinando_redes_neurais.jpg"
+image: {{ site.base_url }}/assets/img/posts/post2_ensinando_redes_neurais.jpg
 category: 'redes neurais'
 math: true
 tags:
@@ -65,7 +65,10 @@ $$
 \end{bmatrix} 
 $$
 
+
 Ótimo! Calculamos o nosso gradiente, vimos que ele é positivo e então temos que "andar" para a direita, como esperávamos. Mas quanto devemos andar? Vamos tentar dar um passo da magnitude do gradiente $|\nabla f(-4)| = 8$. Com isso vamos parar em $x=4$.
+
+
 
 <center>
 <img src="{{ site.baseurl }}/assets/img/uploads/redes_neurais_15.png" width="800px" height="400px">

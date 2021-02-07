@@ -65,12 +65,11 @@ $$
 \end{bmatrix} 
 $$
 
+<p>Ótimo! Calculamos o nosso gradiente, vimos que ele é positivo e então temos que "andar" para a direita, como esperávamos. Mas quanto devemos andar? Vamos tentar dar um passo da magnitude do gradiente:<p>
 
-Ótimo! Calculamos o nosso gradiente, vimos que ele é positivo e então temos que "andar" para a direita, como esperávamos. Mas quanto devemos andar? Vamos tentar dar um passo da magnitude do gradiente:
+$$ |\nabla f(-4)| = 8 $$
 
-$$|\nabla f(-4)| = 8$$
-
- Com isso vamos parar em $x=4$.
+Com isso vamos parar em $x=4$.
 
 <center>
 <img src="{{ site.baseurl }}/assets/img/uploads/redes_neurais_15.png" width="800px" height="400px">

@@ -3,7 +3,7 @@ date: 2020-11-26
 layout: post
 title: Uma introdução a Redes Neurais
 description: Primeiro artigo da série sobre Redes Neurais. Vamos dar uma introdução aos principais blocos que formam uma rede e explicar o funcionamento de cada um.
-image: https://avozdaindustria.com.br/sites/avozdaindustria.com/files/styles/article_featured_retina/public/uploads/2019/01/redes_-neurais_-artificiais_a_voz_da_industria-.jpg?itok=QdSmoZQi
+image: https://matheusjorge.github.io/assets/img/posts/post1_o_que_sao_redes_neurais.png
 category: 'redes neurais'
 math: true
 tags:

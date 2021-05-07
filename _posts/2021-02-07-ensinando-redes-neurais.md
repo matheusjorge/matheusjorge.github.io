@@ -111,19 +111,19 @@ $$x_1 = x_0 + 0.01*|\nabla f(x_0)| = -4 + 0.01*8 = -3.92$$
 
 $$x_2 = x_1 + 0.01*|\nabla f(x_1)| = -3.92 + 0.01* 8 = -3.84$$
 
-Veja que depois de duas iterações, atingimos o valor de $f(-3.84) = -14.75$, enquanto antes tinhamos $f(-2.56) = -6.55$. Podemos ver que a escolha da taxa de aprendizagem não é trivial:
+<p>Veja que depois de duas iterações, atingimos o valor de $f(-3.84) = -14.75$, enquanto antes tinhamos $f(-2.56) = -6.55$. Podemos ver que a escolha da taxa de aprendizagem não é trivial:</p>
 
 > Se $\alpha$ for muito grande corremos o risco de não convergir para o máximo e se for muito pequena podemos demorar muito para atingí-lo.
 
 <h2>Função de perda</h2>
 
-A utilização do gradiente é ótima para otimizarmos funções, mas que função nós estamos querendo otimizar quando falamos de redes neurais? Para tangibilizar, vamos tratar especificamente da rede mais simples vimos até agora: a regressão linear. Vamos até utilizar nosso exemplo anterior de previsão do peso em função da altura.
+<p>A utilização do gradiente é ótima para otimizarmos funções, mas que função nós estamos querendo otimizar quando falamos de redes neurais? Para tangibilizar, vamos tratar especificamente da rede mais simples vimos até agora: a regressão linear. Vamos até utilizar nosso exemplo anterior de previsão do peso em função da altura.</p>
 
 <center>
 <img src="{{ site.baseurl }}/assets/img/uploads/redes_neurais_18.png" width="800px" height="400px">
 </center>
 
-Inicialmente nem nosso parâmetro $w$ nem nosso parâmetro $b$ estão treinados. Geralmente, eles são iniciados com um valor aletório, vamos dizer $w=0.7$ e $b=6$. A curva de previsão da nossa rede é então:
+<p>Inicialmente nem nosso parâmetro $w$ nem nosso parâmetro $b$ estão treinados. Geralmente, eles são iniciados com um valor aletório, vamos dizer $w=0.7$ e $b=6$. A curva de previsão da nossa rede é então:</p>
 
 <center>
 <img src="{{ site.baseurl }}/assets/img/uploads/redes_neurais_19.png" width="800px" height="400px">

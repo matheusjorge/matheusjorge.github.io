@@ -1,10 +1,10 @@
 ---
 layout: author
-photo: /assets/img/uploads/profile.png
+photo: /assets/img/uploads/linkedin_profile.jpeg
 name: matheusjorge
 display_name: Matheus Jorge
 position: Cientista de Dados
-bio: Sou um cientista de dados com muita vontade de aprender e ainda mais de ensinar.
+bio: Cientista de dados na Loft e professor/escritor nas horas vagas.
 github_username: matheusjorge
 facebook_username: matheus.jorge.56
 twitter_username: matjorge18

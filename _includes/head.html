@@ -94,4 +94,8 @@
     <script>
         document.querySelector('html').classList.remove('no-js');
     </script>
+
+    {% if site.google_analytics and jekyll.environment == 'production' %}
+        {% include analytics.html %}
+    {% endif %}
 </head>

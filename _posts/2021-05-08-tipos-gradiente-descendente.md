@@ -114,7 +114,7 @@ O ideia é que percorramos essa curva tentando encontrar o valor de $w_1$ que mi
 A primeira abordagem que vamos testar utilizar todos os pontos de uma vez. Vamos observar o comportamento dos parâmetros quando utilizamos os erros das 100 previsões para atualizar os pesos. Esse é o cenário em que o Alex perguntava para 10 pessoas antes de seguir seu caminho.
 
 <center>
-<img src="{{ site.baseurl }}/assets/img/uploads/tipo_gd_11.gif" width="1000px" height="400px">
+<img src="{{ site.baseurl }}/assets/img/uploads/tipo_gd_11.gif" width="800px" height="400px">
 </center>
 
 ### Um ponto de cada vez
@@ -122,7 +122,7 @@ A primeira abordagem que vamos testar utilizar todos os pontos de uma vez. Vamos
 Vamos agora ver como o algoritmo se comporta quando utilizamos um apenas ponto, selecionado aletoriamente, para atualizar os pesos. Como devem ter imaginado, na nossa analogia, esse é o cenário em que o Alex perguntava somente para uma pessoa antes de seguir.
 
 <center>
-<img src="{{ site.baseurl }}/assets/img/uploads/tipo_gd_12.gif" width="1000px" height="400px">
+<img src="{{ site.baseurl }}/assets/img/uploads/tipo_gd_12.gif" width="800px" height="400px">
 </center>
 
 ### Alguns pontos por vez
@@ -130,7 +130,7 @@ Vamos agora ver como o algoritmo se comporta quando utilizamos um apenas ponto, 
 Por fim, vamos analisar como o algoritmo se comporta quando pegamos 10 pontos por vez. Talvez seja óbvio, mas esse é o último cenário vivido por Alex, no qual ele pergunta para 5 pessoas.
 
 <center>
-<img src="{{ site.baseurl }}/assets/img/uploads/tipo_gd_13.gif" width="1000px" height="400px">
+<img src="{{ site.baseurl }}/assets/img/uploads/tipo_gd_13.gif" width="800px" height="400px">
 </center>
 
 ## Comparando

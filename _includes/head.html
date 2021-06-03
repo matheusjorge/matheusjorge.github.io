@@ -87,6 +87,7 @@
     <link rel="canonical" href="{{ url }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | prepend: site.baseurl | prepend: site.url }}" />
 
+    {% include analytics.html %}
     <!-- Include extra styles -->
     {% include extra-css.html %}
 
@@ -94,8 +95,4 @@
     <script>
         document.querySelector('html').classList.remove('no-js');
     </script>
-
-    {% if site.google_analytics and jekyll.environment == 'production' %}
-        {% include analytics.html %}
-    {% endif %}
 </head>

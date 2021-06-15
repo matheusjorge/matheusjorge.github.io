@@ -55,23 +55,6 @@
     text-align: center;
     @include mainFont(300);
   }
-  
-  details {
-    border: 1px solid #aaa;
-    border-radius: 4px;
-    padding: .5em .5em 0;
-    display: "inline";
-  }
-
-  summary {
-      font-weight: bold;
-      margin: -.5em -.5em 0;
-      padding: .5em;
-  }
-
-  details[open] {
-      padding: .5em;
-  }
 
   p,
   h1,
@@ -82,7 +65,9 @@
   h6,
   ul,
   ol,
-  iframe {
+  iframe,
+  details, 
+  summary {
     @include center(rem(800px));
     @include mainFont(400);
     font-size: rem(17px);
@@ -167,6 +152,16 @@
         font-size: rem(17px);
       }
     }
+  }
+
+  details {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: .5em .5em 0;
+  }
+
+  details[open] {
+      padding: .5em;
   }
 
   li {

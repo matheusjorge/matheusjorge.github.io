@@ -81,13 +81,13 @@ Podemos ver então que o gradiente da função de custo depende da derivada da f
 
 Vamos comparar então as duas funções que mostramos até agora, começando pela função *clip*. Um importante conceito que temos que relembrar para tornar nossa análise mais intuitiva é que a derivada de uma função escalar (que recebe um único número e retorna um único número) pode ser interpretado como a inclinação da curva em determinado ponto. Dessa forma, quando *z* for menor que 0 ou maior que 1, a derivada será igual a 0, pois as curvas são retas na horizontal. Já entre 0 e 1 a função tem a forma $f(z) = z$, e podemos concluir que a inclinação da curva é 1. Matematicamente, podemos escrever
 
-\begin{equation}
+$$
 f^\prime(z) = 
   \begin{cases} 
       1 & 0 \leq z \leq 1, \\
       0 & c.c.
   \end{cases}
-\end{equation}
+$$
 
 Perceba que a função *clip* possui dois "bicos", em 0 e 1, o que significaria que a derivada não existe nesses pontos. Porém, para conseguirmos utilizar essa função, vamos assumir que em ambos os pontos, a derivada é igual a 1. Visualmente, temos o seguinte gráfico:
 
@@ -171,13 +171,13 @@ Mas qual a vantagem de utilizar essa função em vez de alguma outra que já vim
 
 Vamos começar pela segunda pergunta: não, não teremos esse problema. Apesar de a ReLU parecer linear, o fato de que limitamos em 0 faz com que ela não seja. Isso é suficiente para garantir que temos então uma função de ativação que funciona. Para verificar a primeira questão vamos analisar o gráfico da derivada da ReLU. Seguindo o mesmo raciocínio de como calculamos a derivada da função *clip*, a expressão para a derivada da ReLU é:
 
-\begin{equation}
+$$
 ReLU^\prime(x) = 
   \begin{cases} 
-        1 & 0 < x, \\
-        0 & c.c.
+        1 \textrm{, se } x \lt 0}, \
+        0 \textrm{c.c.}
   \end{cases}
-\end{equation}
+$$
 
 Graficamente então temos:
 

@@ -133,7 +133,7 @@ Vamos tratar agora de outra função de ativação muito comum, chamada **tangen
 
 Pelo gráfico acima, a tangente hiperbólica tem uma forma muito parecida com a sigmóide. A principal diferença entre as duas é que a tangente hiperbólica tem valor mínimo -1, em vez de 0. Mas como isso ajudaria na propagação dos erros? Lembra que comentamos que a derivada pode ser vista como a inclinação da curva? O que acontece é que a tangente hiperbólica sai de -1 para chegar até 1 em um intervalo menor do que a sigmóide sai de 0 para chegar a 1. Isso significa que a inclinação da tangente hiperbólica tende a ser maior do que a da sigmóide, facilitando a atualização dos pesos. 
 
-Vamos encontrar a expressão para da derivada da tangente hiperbólica primeiro e em seguida vamos comparar as duas curvas para vermos mais claramente a diferença entre elas. Aqui vamos seguir a mesma lógica de cálculo da derivada da sigmóide, utilizando a regra do quociente (novamente vamos omitir a demonstração mas quem para quem quiser é só clica no botão):
+Vamos encontrar a expressão para da derivada da tangente hiperbólica primeiro e em seguida vamos comparar as duas curvas para vermos mais claramente a diferença entre elas. Aqui vamos seguir a mesma lógica de cálculo da derivada da sigmóide, utilizando a regra do quociente (novamente vamos omitir a demonstração mas quem para quem quiser é só clicar no botão):
 
 <details>
     <summary>Demonstração - Derivada Tangente Hiperbólica</summary>

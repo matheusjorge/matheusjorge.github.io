@@ -83,10 +83,10 @@ Vamos comparar então as duas funções que mostramos até agora, começando pel
 
 \begin{equation}
 f^\prime(z) = 
-\begin{cases} 
-      1 & 0 \leq z \leq 1 \\
-      0 & c.c.
-\end{cases}
+  \begin{cases} 
+        1 & 0 \leq z \leq 1, \\
+        0 & c.c.
+  \end{cases}
 \end{equation}
 
 Perceba que a função *clip* possui dois "bicos", em 0 e 1, o que significaria que a derivada não existe nesses pontos. Porém, para conseguirmos utilizar essa função, vamos assumir que em ambos os pontos, a derivada é igual a 1. Visualmente, temos o seguinte gráfico:
@@ -173,10 +173,10 @@ Vamos começar pela segunda pergunta: não, não teremos esse problema. Apesar d
 
 \begin{equation}
 ReLU^\prime(x) = 
-\begin{cases} 
-      1 & 0 < x\\
-      0 & c.c.
-\end{cases}
+  \begin{cases} 
+        1 & 0 < x, \\
+        0 & c.c.
+  \end{cases}
 \end{equation}
 
 Graficamente então temos:

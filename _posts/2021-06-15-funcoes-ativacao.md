@@ -84,8 +84,8 @@ Vamos comparar então as duas funções que mostramos até agora, começando pel
 $$
 f^\prime(z) = 
   \begin{cases} 
-      1 & 0 \leq z \leq 1, \\
-      0 & c.c.
+      1 & \textrm{se } 0 \leq z \leq 1, \\
+      0 & \textrm{c.c.}
   \end{cases}
 $$
 
@@ -174,8 +174,8 @@ Vamos começar pela segunda pergunta: não, não teremos esse problema. Apesar d
 $$
 ReLU^\prime(x) = 
   \begin{cases} 
-        1 \textrm{, se } x \lt 0}, \
-        0 \textrm{c.c.}
+        1 & \textrm{se } x \lt 0, \\
+        0 & \textrm{c.c.}
   \end{cases}
 $$
 

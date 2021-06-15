@@ -100,7 +100,7 @@ O grande problema dessa função é que se a saída da minha combinação linear
 Isso não parece muito promissor, não é mesmo? Vamos olhar então a derivada da sigmóide. Aqui vamos recorrer a uma abordagem menos geométrica para encontrar a derivada. Vamos utilizar então a regra do quociente (a demonstração está escondida para não tornar o texto muito denso):
 
 <details>
-    <summary><h5>Demonstração - Derivada Sigmóide</h5></summary>
+    <summary>Demonstração - Derivada Sigmóide</summary>
 
 $$\frac{d \sigma(x)}{dx} = \frac{d\frac{1}{dx} \times 1+e^{-x} - 1 \times \frac{d 1+e^{-x}}{dx}}{(1+e^{-x})^2}$$
 
@@ -136,7 +136,7 @@ Pelo gráfico acima, a tangente hiperbólica tem uma forma muito parecida com a 
 Vamos encontrar a expressão para da derivada da tangente hiperbólica primeiro e em seguida vamos comparar as duas curvas para vermos mais claramente a diferença entre elas. Aqui vamos seguir a mesma lógica de cálculo da derivada da sigmóide, utilizando a regra do quociente (novamente vamos omitir a demonstração mas quem para quem quiser é só clicar no botão):
 
 <details>
-    <summary><h5>Demonstração - Derivada Tangente Hiperbólica</h5></summary>
+    <summary>Demonstração - Derivada Tangente Hiperbólica</summary>
 
 $$\frac{d \tanh(x)}{dx} = \frac{\frac{d e^{x} - e^{-x}}{dx} \times (e^{x} + e^{-x}) - (e^{x} - e^{-x}) \times \frac{de^{x} + e^{-x}}{dx}}{(e^{x} + e^{-x})^2}$$
 

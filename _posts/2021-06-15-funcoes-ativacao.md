@@ -84,8 +84,7 @@ Vamos comparar então as duas funções que mostramos até agora, começando pel
 \begin{equation}
 f^\prime(z) = 
   \begin{cases} 
-        1 & 0 \leq z \leq 1, \\
-        0 & c.c.
+        \displaylines{1 & 0 \leq z \leq 1, \\  0 & c.c.}
   \end{cases}
 \end{equation}
 
@@ -174,8 +173,7 @@ Vamos começar pela segunda pergunta: não, não teremos esse problema. Apesar d
 \begin{equation}
 ReLU^\prime(x) = 
   \begin{cases} 
-        1 & 0 < x, \\
-        0 & c.c.
+        \displaylines{1 & 0 < x, \\ 0 & c.c.}
   \end{cases}
 \end{equation}
 

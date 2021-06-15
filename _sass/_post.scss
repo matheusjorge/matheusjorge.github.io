@@ -155,12 +155,10 @@
   }
 
   details {
-    border: 1px solid #aaa;
-    border-radius: 4px;
-  }
-
-  details[open] {
-      padding: .5em;
+    border: rem(1px) solid #aaa;
+    border-radius: rem(4px);
+    margin-left: rem(22px);
+    cursor: pointer;
   }
 
   li {

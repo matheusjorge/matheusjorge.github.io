@@ -21,14 +21,14 @@ Fala, galera! Bem-vindos a mais artigo da série sobre redes neurais. Dessa vez 
 
 ### Relembrando
 
-Como falamos no primeiro artigo dessa série (você dar uma conferida [aqui](https://matheusjorge.github.io/introducao-redes-neurais/), caso ainda não tenha visto), as funções de ativação tem duas funções principais nas redes neurais:
+Como falamos no primeiro artigo dessa série (você pode dar uma conferida [aqui](https://matheusjorge.github.io/introducao-redes-neurais/), caso ainda não tenha visto), as funções de ativação tem duas funções principais nas redes neurais:
 
 > 1. Na camada de saída, a função de ativação é utilizada para mapearmos a saída da combinação linear dos neurônios dessa camada para o domínio esperado;
 > 2. A funções de ativação introduzem não-linearidades nas camadas intermediárias que diminuem o viés do modelo como um todo.
 
 Certo ... Muito legal, mas o que isso significa na prática? Bom, o primeiro caso é mais fácil de entender: o que você acharia se eu te dissesse que um paciente tem uma probabilidade de 150% de ter câncer? Certamente você me diria que alguma coisa não está certa pois probabilidades tem que estar entre 0 e 100%. A pergunta é então: como eu consigo que minha rede neural entenda que todas as previsões que ela me dá tem que estar nesse intervalo? Como você deve ter imaginado, quem vem nos salvar são as funções de ativação. Podemos utilizá-las para mapear qualquer número que saia da combinação linear final dessa rede em um número no intervalo de 0 a 1, em que se a previsão for 1 indica uma probabilidade de 100%.
 
-O segundo caso é um pouco mais complexo e vamos precisar da ajuda de algumas equações para entendê-lo. Se nos lembramos bem, a equação que mapeia as entradas $X$ (nossas variáveis explicativas) de uma camada da rede para a a saída $O$ dessa cada é:
+O segundo caso é um pouco mais complexo e vamos precisar da ajuda de algumas equações para entendê-lo. Se nos lembramos bem, a equação que mapeia as entradas $X$ (nossas variáveis explicativas) de uma camada da rede para a saída $O$ dessa camada é:
 
 $$O_i = f(W_i^T X_i + b_i),$$
 
@@ -46,7 +46,7 @@ $$O_{i+1} = (W_{i+1}^T W_i^T) X_i + (W_{i+1}^T b_i + b_{i+1})$$
 
 $$O_{i+1} = W^{\prime T}_{i+1} X_i + b^\prime_{i+1}$$
 
-Olhando a última equação acima, podemos ver que a saída da segunda camada nada mais é do que uma combinação linear das entradas da primeira. E isso significa o que exatamente? Significa que não importam quantas camadas minha rede tenha a saida dela será sempre uma combinação linear das entradas da rede. Seria a mesma coisa que ter apenas uma camada na rede, o que não é muito legal. Para uma explicação com um pouco mais de detalhes, vocês podem dar uma olhada no link do artigo acima.
+Olhando a última equação acima, podemos ver que a saída da segunda camada nada mais é do que uma combinação linear das entradas da primeira. E isso significa o que exatamente? Significa que, não importam quantas camadas minha rede tenha, a saida dela será sempre uma combinação linear das entradas da rede. Seria a mesma coisa que ter apenas uma camada na rede, o que não é muito legal. Para uma explicação com um pouco mais de detalhes, vocês podem dar uma olhada no link do artigo.
 
 ### E agora? O que eu uso?
 
@@ -64,7 +64,7 @@ Também conhecida como função logística, a função sigmóide é uma das fun�
 <img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_01.png" width="800px" height="400px">
 </center>
 
-Se você disse que é porque ela limita a saída entre 0 e 1 você acertou! A função sigmóide é muito utilizada em camadas finais da rede para problemas de classificação, justamente porque ela garante que a saída sempre será um valor entre 0 (classe negativa) e 1 (classe positiva). Mas você pode se perguntar, por que não apenas colocar um limitante em 0 e em 1 como na função abaixo (vamos nos referir a ela como *clip*)?
+Se você disse que é porque ela limita a saída entre 0 e 1, você acertou! A função sigmóide é muito utilizada em camadas finais da rede para problemas de classificação, justamente porque ela garante que a saída sempre será um valor entre 0 (classe negativa) e 1 (classe positiva). Mas você pode se perguntar, por que não apenas colocar um limitante em 0 e em 1 como na função abaixo (vamos nos referir a ela como *clip*)?
 <center>
 <img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_02.png" width="800px" height="400px">
 </center>
@@ -77,9 +77,9 @@ $$ŷ = f(z)$$
 
 $$ z = w*x + b $$
 
-Podemos ver então que o gradiente da função de custo depende da derivada da função de ativação, Portanto, escolher uma função de ativação também temos que analisar como a derivada dela se comporta para entendermos melhor como o erro será propagado pela rede. 
+Podemos ver então que o gradiente da função de custo depende da derivada da função de ativação. Portanto, para escolher uma função de ativação, também temos que analisar como a derivada dela se comporta para entendermos melhor como o erro será propagado pela rede. 
 
-Vamos comparar então as duas funções que mostramos até agora, começando pela função *clip*. Um importante conceito que temos que relembrar para tornar nossa análise mais intuitiva é que a derivada de uma função escalar (que recebe um único número e retorna um único número) pode ser interpretado como a inclinação da curva em determinado ponto. Dessa forma, quando *z* for menor que 0 ou maior que 1, a derivada será igual a 0, pois as curvas são retas na horizontal. Já entre 0 e 1 a função tem a forma $f(z) = z$, e podemos concluir que a inclinação da curva é 1. Matematicamente, podemos escrever
+Vamos comparar então as duas funções que mostramos até agora, começando pela função *clip*. Um importante conceito que temos que relembrar para tornar nossa análise mais intuitiva é que a derivada de uma função escalar (que recebe um único número e retorna um único número) pode ser interpretada como a inclinação da curva em determinado ponto. Dessa forma, quando *z* for menor que 0 ou maior que 1, a derivada será igual a 0, pois as curvas são retas na horizontal. Já entre 0 e 1 a função tem a forma $f(z) = z$, e podemos concluir que a inclinação da curva é 1. Matematicamente, podemos escrever
 
 $$
 f^\prime(z) = 
@@ -119,7 +119,7 @@ E voilá! Temos nossa equação para a derivada da sigmóide. Vamos olhar agora 
 <img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_04.png" width="800px" height="400px">
 </center>
 
-Comparando as duas curvas, podemos perceber que ambas, em algum momento, chegam 0. A diferença entre elas está em como elas chegam e em quais valores de $x$. O derivada da sigmóide tem uma forma muito mais suave, e o que eu quero dizer com isso é que ela vai chegando a 0 aos poucos, enquanto a derivada da funão *clip* tem uma mudança abrupta de 1 para 0. Além disso, no gráfico acima podemos observar que que mesmo quando $x=-5$, por exemplo, a derivada da sigmóide não é zero. Isso nos auxilia na propagação do gradiente para as outras camadas da rede.
+Comparando as duas curvas, podemos perceber que ambas, em algum momento, chegam a 0. A diferença entre elas está em como elas chegam e em quais valores de $x$. A derivada da sigmóide tem uma forma muito mais suave, e o que eu quero dizer com isso é que ela vai chegando a 0 aos poucos, enquanto a derivada da função *clip* tem uma mudança abrupta de 1 para 0. Além disso, no gráfico acima podemos observar que mesmo quando $x=-5$, por exemplo, a derivada da sigmóide não é zero. Isso nos auxilia na propagação do gradiente para as outras camadas da rede.
 
 ### Tangente Hiperbólica
 
@@ -133,7 +133,7 @@ Vamos tratar agora de outra função de ativação muito comum, chamada **tangen
 
 Pelo gráfico acima, a tangente hiperbólica tem uma forma muito parecida com a sigmóide. A principal diferença entre as duas é que a tangente hiperbólica tem valor mínimo -1, em vez de 0. Mas como isso ajudaria na propagação dos erros? Lembra que comentamos que a derivada pode ser vista como a inclinação da curva? O que acontece é que a tangente hiperbólica sai de -1 para chegar até 1 em um intervalo menor do que a sigmóide sai de 0 para chegar a 1. Isso significa que a inclinação da tangente hiperbólica tende a ser maior do que a da sigmóide, facilitando a atualização dos pesos. 
 
-Vamos encontrar a expressão para da derivada da tangente hiperbólica primeiro e em seguida vamos comparar as duas curvas para vermos mais claramente a diferença entre elas. Aqui vamos seguir a mesma lógica de cálculo da derivada da sigmóide, utilizando a regra do quociente (novamente vamos omitir a demonstração mas quem para quem quiser é só clicar no botão):
+Vamos encontrar a expressão da derivada da tangente hiperbólica primeiro e em seguida vamos comparar as duas curvas para vermos mais claramente a diferença entre elas. Aqui vamos seguir a mesma lógica de cálculo da derivada da sigmóide, utilizando a regra do quociente (novamente vamos omitir a demonstração mas, para quem quiser, é só clicar no botão):
 
 <details>
     <summary>Demonstração - Derivada Tangente Hiperbólica</summary>
@@ -149,13 +149,13 @@ $$\frac{d \tanh(x)}{dx} = \frac{(e^{x} + e^{-x})^2}{(e^{x} + e^{-x})^2} - \frac{
 
 $$\frac{d \tanh(x)}{dx} = 1 - \tanh(x)^2$$
 
-Ótimo! Agora que já temos a nossa expressão, vamos plotar o gráfico da duas derivadas juntas.
+Ótimo! Agora que já temos a nossa expressão, vamos plotar o gráfico das duas derivadas juntas.
 
 <center>
 <img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_06.png" width="800px" height="400px">
 </center>
 
-Agora sim podemos ter uma boa visão de como as derivadas sem comportam de forma diferente. Embora a derivada da tangente hiperbólica (curva em verde) vá para 0 mais rapidamente que a derivada da sigmóide (curva em vermelho/laranja), o valor dela entre -1 e 1 supera e muito o valor da sigmóide. Dessa forma, fica claro de ver que os erros são melhor propagados pela tangente hiperbólica.
+Agora sim podemos ter uma boa visão de como as derivadas sem comportam de forma diferente. Embora a derivada da tangente hiperbólica (curva em verde) vá para 0 mais rapidamente que a derivada da sigmóide (curva em vermelho/laranja), o valor dela entre -1 e 1 supera, e muito, o valor da sigmóide. Dessa forma, fica claro que os erros são melhor propagados pela tangente hiperbólica.
 
 ### ReLU
 
@@ -189,7 +189,7 @@ Podemos ver que qualquer valor menor ou igual que 0 tem derivada igual a 0, ou s
 
 ### Dissipação do gradiente
 
-Até agora, falamos muito que era interessante que as derivadas das dunções de ativação fossem mais altas porque isso ajudava a propagar o erro pela rede, mas qual a intuição por trás disso. Lembre-se que o segredo por trás do gradiente descendente é a regra de cadeia aplicada em cada camada da rede. Isso significa que a expressão do gradiente para determinada camada é a multiplicação do gradiente de todas as camada superiores a ela com as derivadas relativas àquela camada. Dessa forma, fazendo algumas simplificações de notação, podemos escrever para uma rede de 2 camadas:
+Até agora, falamos muito que era interessante que as derivadas das funções de ativação fossem mais altas porque isso ajudava a propagar o erro pela rede, mas qual a intuição por trás disso? Lembre-se que o segredo por trás do gradiente descendente é a regra de cadeia aplicada em cada camada da rede. Isso significa que a expressão do gradiente para determinada camada é a multiplicação do gradiente de todas as camadas superiores a ela com as derivadas relativas àquela camada. Dessa forma, fazendo algumas simplificações de notação, podemos escrever para uma rede de 2 camadas:
 
 $$ \frac{\partial \mathscr{L}}{\partial w_1} = f_2^\prime(z_2)f_1^\prime(z_1) U,$$
 
@@ -205,12 +205,12 @@ Suponha que tenhamos uma rede com 10 camadas, e que (por um sinal do destino) to
 <img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_09.png" width="800px" height="400px">
 </center>
 
-A curva da sigmóide cai rapidamente para 0, indicando que todas as camadas abaixo da camada 7/8 não teram seus pesos atualizados. Já a tangente hiperbólica possui um comportamento melhor, sendo que em 10 camadas ela ainda não convergiu para zero. Por esse motivo, ela é mais utilizada nas camadas intermediárias do que a sigmóide. Mas conforme aumentamos o número de camadas a tendência é que ela também vá para 0. Finalmente, a ReLU apresenta um comportamento totalmente constante: independente da camada $M=1$, o que facilita a propagação do erro em camadas menos profundas.
+A curva da sigmóide cai rapidamente para 0, indicando que todas as camadas abaixo da camada 7/8 não terão seus pesos atualizados. Já a tangente hiperbólica possui um comportamento melhor, sendo que em 10 camadas ela ainda não convergiu para zero. Por esse motivo, ela é mais utilizada nas camadas intermediárias do que a sigmóide. Mas conforme aumentamos o número de camadas, a tendência é que ela também vá para 0. Finalmente, a ReLU apresenta um comportamento totalmente constante: independente da camada $M=1$, o que facilita a propagação do erro em camadas menos profundas.
 
 ### Conclusão
 
-Hoje falamos sobre a importância das funções de ativação, mostramos alguns exemplos muito utilizados e as características que as fazem serem escolhidas em diversos contextos. Entretanto, esse foram só alguns exemplos. Existem diversas funções que ativação que podem ser melhores dependendo do tipo de problema (por exemplo, *softmax*, *leaky-relu*, *gelu*, etc.). Também comentamos sobre o problema de dissipação do gradiente, mas existe o problema oposto: **explosão do gradiente** (do inglês, *exploding gradient*), em que a multiplicação leva a valores muito grandes. Todos esses são problemas que valem ser explorados, caso tenham interesse.
+Hoje falamos sobre a importância das funções de ativação, mostramos alguns exemplos muito utilizados e as características que as fazem serem escolhidas em diversos contextos. Entretanto, esses foram só alguns exemplos. Existem diversas funções de ativação que podem ser melhores dependendo do tipo de problema (por exemplo, *softmax*, *leaky-relu*, *gelu*, etc.). Também comentamos sobre o problema de dissipação do gradiente, mas existe o problema oposto: **explosão do gradiente** (do inglês, *exploding gradient*), em que a multiplicação leva a valores muito grandes. Todos esses são problemas que valem ser explorados, caso tenham interesse.
 
 ### E agora?
 
-Esse foi o último artigo dessa primeira série sobre redes neurais. Ainda pretendo escrever mais sobre outros tipos de redes, como as redes recorrentes, redes convolucionais e transformers, mas elas serão escritas em séries separadas. Também pretendo falar sobre outros algoritmos de aprendizado de máquina em séries futuras. Espero que tenham gostado do conteúdo desses primeiro artigos e fiquem ligados: em breve teremos novo conteúdos para vocês!
+Esse foi o último artigo dessa primeira série sobre redes neurais. Ainda pretendo escrever mais sobre outros tipos de redes, como as redes recorrentes, redes convolucionais e transformers, mas elas serão escritas em séries separadas. Também pretendo falar sobre outros algoritmos de aprendizado de máquina em séries futuras. Espero que tenham gostado do conteúdo desses primeiro artigos e fiquem ligados: em breve teremos novos conteúdos para vocês!

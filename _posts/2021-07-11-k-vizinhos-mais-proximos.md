@@ -17,13 +17,13 @@ author: matheusjorge
 Fala, pessoal! Depois da nossa série sobre redes neurais, estamos de volta para falar sobre outro tipo de algoritmo de *machine learning*: o **K vizinhos mais próximos** (ou **KNN**, do inglês *K Nearest Neighbors*). O *KNN* é um algoritmo relativamente simples na intuição. Podemos descrever o seu funcionamento em duas etapas:
 
 1. Encontrar os K elementos **mais parecidos** (vizinhos) com o elemento que queremos saber a resposta;
-2. **Sumarizar** a reposta (já conhecidas) desses elementos vizinhos para obter a predição para o elemento desejado.
+2. **Sumarizar** a reposta (já conhecida) desses elementos vizinhos para obter a predição para o elemento desejado.
 
-Intuitivamente, o *KNN* utiliza a máxima de que elementos com características similares, ou seja, elementos parecidos tendem a ter a mesma resposta. Isso faz sentido se pensarmos no nosso dia a dia: nossos amigos, familiares com quem temos mais afinidade (mais parecidos) tendem a ter as mesmas opiniões e interesses que nós. Uma outra forma de se lembrar da intuição desse algortimo é pela famosa frase:
+Intuitivamente, o *KNN* utiliza a máxima de que elementos com características similares, ou seja, elementos parecidos, tendem a ter a mesma resposta. Isso faz sentido se pensarmos no nosso dia a dia: nossos amigos e familiares com quem temos mais afinidade (mais parecidos) tendem a ter as mesmas opiniões e interesses que nós. Uma outra forma de se lembrar da intuição desse algortimo é pela famosa frase:
 
 > "Diga-me com quem andas que te direi quem tu és"
 
-Mas, mesmo com uma intuinção tão simples, os dois passos descritos acima deixam algumas dúvidas (Pare um pouco agora antes de prosseguir e veja se consegue pensar em alguma coisa que não está bem definida). Se você já fez sua reflexão, podemos prosseguir com as dúvidas que me vêem à mente:
+Mas, mesmo com uma intuinção tão simples, os dois passos descritos acima deixam algumas dúvidas (pare um pouco agora antes de prosseguir e veja se consegue pensar em alguma coisa que não está bem definida). Se você já fez sua reflexão, podemos prosseguir com as dúvidas que me vêem à mente:
 
 - O que significa "sumarizar" as reposta dos vizinhos?
 - Como medimos o quão parecido dois elementos são?
@@ -34,18 +34,18 @@ Essas são as principais perguntas que pretendemos responder ao longo dessa nova
 
 ### Previsões
 
-Pelo passo a passo, o *KKN* não possui uma etapa de treino propriamente dita, como as redes neurais, mas ainda queremos que ele nos dê uma previsão, certo? Um ponto importante aqui é que, apesar de não haver um treino explícito, ainda precisamos de um conjunto de dados de treino (dos quais sabemos as respostas) para conseguir realizar uma previsão para outros dados. O passo a passo do algoritmo é bem intuitivo sobre o que devemos fazer para obtermos essas previsão. Mesmo assim, existem alguma dúvidas no ar sobre como realmente fazer essa previsão nos dois passos. Aqui vamos inverter um pouco a ordem e começar falando sobre o passo 2: sumarizar as respostas dos vizinhos. Mas o que significa sumarizar as respostas? Quando utilizamos "sumarizar" estamos nos referindo ao fato de pegar um conjunto de pontos (as respostas dos vizinhos) e retornar um único número (a saída prevista). Vamos tratar esse assunto de dois pontos de vista: classificação e regressão.
+Pelo passo a passo, o *KKN* não possui uma etapa de treino propriamente dita, como as redes neurais, mas ainda queremos que ele nos dê uma previsão, certo? Um ponto importante aqui é que, apesar de não haver um treino explícito, ainda precisamos de um conjunto de dados de treino (dos quais sabemos as respostas) para conseguir realizar uma previsão para outros dados. O passo a passo do algoritmo é bem intuitivo sobre o que devemos fazer para obtermos essas previsão. Mesmo assim, existem alguma dúvidas no ar sobre como realmente fazer essa previsão nos dois passos. Aqui vamos inverter um pouco a ordem e começar falando sobre o passo 2: sumarizar as respostas dos vizinhos. Mas o que significa sumarizar as respostas? Quando utilizamos "sumarizar", estamos nos referindo ao fato de pegar um conjunto de pontos (as respostas dos vizinhos) e retornar um único número (a saída prevista). Vamos tratar esse assunto de dois pontos de vista: classificação e regressão.
 
 #### Classificação
 
-Começaremos falando sobre classificação. Só recapitulando um pouco, quando nos referimos à "classificação" queremos dizer que nosso problema nos pede para prever uma saída discreta, também chamadas de classes. Por exemplo, se temos uma imagem e queremos saber se trata-se de um cachorro, um gato ou um passáro, esses são os únitos 3 valores que podemos admitir na saída. Outro exemplo clássico é quando temos um e-mail e queremos saber se é um *spam* ou não.
+Começaremos falando sobre classificação. Só recapitulando um pouco, quando nos referimos à "classificação", queremos dizer que nosso problema nos pede para prever uma saída discreta, também chamadas de classes. Por exemplo, se temos uma imagem e queremos saber se trata-se de um cachorro, um gato ou um passáro, esses são os únicos 3 valores que podemos admitir na saída. Outro exemplo clássico é quando temos um e-mail e queremos saber se é um *spam* ou não.
 
 Nesse cenário, o modo mais intuitivo de fazer a sumarização é simplemente contando quantos elementos de cada classe são meus vizinhos. A classe com mais vizinhos será a nossa previsão. 
 
-Vamosa usar o exemplo do *spam* aqui. Suponha que tenhamos um conjunto de e-mails que já sabemos se são *spam* (verdes) ou não (vermelhos). Quando o novo e-mail $A$ chega, queremos saber se ele é ou não *spam*. Para isso procuramos os e-mails mais parecidos com $A$ e vemos suas repostas. A imagem a seguir pode ajudar a entendermos melhor
+Vamos usar o exemplo do *spam* aqui. Suponha que tenhamos um conjunto de e-mails que já sabemos se são *spam* (verdes) ou não (vermelhos). Quando o novo e-mail $A$ chega, queremos saber se ele é ou não *spam*. Para isso procuramos os e-mails mais parecidos com $A$ e vemos suas repostas. A imagem a seguir pode ajudar a entendermos melhor:
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_01.png" width="1500px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_01.png" width="1200px" height="400px"/> 
 </center>
 
 Podemos também ir um pouco mais além e dizer também qual a probabilidade daquele e-mail ser *spam*. Em vez de apenas pegar a classe com mais representantes, vamos agora analisar a quantidade de vizinhos de cada classe dentre os K mais próximos. Matematicamente, podemos escrever essa probabilidade como:
@@ -55,7 +55,7 @@ $$ P(Y=j|X=x_A) = \frac{1}{K} \sum_{i \in N_A} I(y_i = j)$$
 Espera um pouco! Estavámos falando aqui de vizinhos, com imagens bonitinhas e agora temos essa equação feia? Em uma primeira olhada ela pode parecer realmente estranha, mas vamos analisá-la com mais calma. Primeiro algumas definições:
 
 - $x_A$: conjunto de características do ponto A;
-- $P(Y=j|X=x_A)$: probabilidade do ponto A pertencem à classe *j*;
+- $P(Y=j \vert X=x_A)$: probabilidade do ponto A pertencem à classe *j*;
 - $K$: quantidade de vizinhos que estamos analisando;
 - $N_A$: conjunto dos $K$ vizinhos do ponto A;
 - $I(y_i = j)$: função que retorna o valor 1, se o ponto $x_i \in N_A$ pertencer à classe *j* ($y_i = j$), e 0, caso contrário.
@@ -65,7 +65,7 @@ Começando pela parte do somatório: para cada um dos vizinhos do ponto A, verif
 De novo, vamos recorrer às imagens para trazer um entendimento melhor.
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_02.png" width="1500px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_02.png" width="1200px" height="400px"/> 
 </center>
 
 Que legal! Conseguimos até estimar as probabilidades de pertencimento à determinada classe, mas aqui vou levantar outro questionamento (lá vem ele de novo): o que acontece com a noção de distância mesmo entre os vizinhos? Nos nossos exemplos, os vizinhos mais próximos do ponto A são da classe 0, mas mesmo assim, quando escolhemos $K=5$, a previsão que temos é da classe 1. Dessa forma, descartamos totalmente a informação das diferentes distâncias e tratamos todos os vizinhos como iguais.

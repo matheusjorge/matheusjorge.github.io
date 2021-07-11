@@ -1,216 +1,143 @@
 ---
-date: 2021-06-15
+date: 2021-07-11
 layout: post
-title: Funções de ativação
-description: Neste quarto e último artigo da série sobre redes neurais vamos falar um pouco sobre a importância das funções de ativação, quais as mais comumente utilizadas e quais características as fazem tão interessantes.
-image: https://matheusjorge.github.io/assets/img/posts/post4_funcoes_ativacao.jpg
-category: 'redes neurais'
+title: K vizinhos mais próximos
+description: Neste primeiro artigo da série sobre o algoritmo dos K vizinhos mais próximos vamos falar um pouco sobre a intuição por trás do modelo e como ele realiza as previsões.
+image: https://matheusjorge.github.io/assets/img/posts/post5_knn.jpg
+category: 'K vizinhos mais próximos'
 math: true
 tags:
-  - redes neurais
-  - funções de ativação
-  - sigmóide
-  - tangente hiperbólica
-  - Relu
+  - knn
+  - k vizinhos mais próximos
 author: matheusjorge
 ---
 
-## Funções de ativações
+<h2> K vizinhos mais próximos </h2> 
 
-Fala, galera! Bem-vindos a mais artigo da série sobre redes neurais. Dessa vez vamos falar um pouco mais afundo das famosas **funções de ativação**, mostrando algumas das funções mais comumente utilizadas e quais são as características que fazem com elas sejam tão queridas pelos cientistas de dados.
+Fala, pessoal! Depois da nossa série sobre redes neurais, estamos de volta para falar sobre outro tipo de algoritmo de *machine learning*: o **K vizinhos mais próximos** (ou **KNN**, do inglês *K Nearest Neighbors*). O *KNN* é um algoritmo relativamente simples na intuição. Podemos descrever o seu funcionamento em duas etapas:
 
-### Relembrando
+1. Encontrar os K elementos **mais parecidos** (vizinhos) com o elemento que queremos saber a resposta;
+2. **Sumarizar** a reposta (já conhecidas) desses elementos vizinhos para obter a predição para o elemento desejado.
 
-Como falamos no primeiro artigo dessa série (você pode dar uma conferida [aqui](https://matheusjorge.github.io/introducao-redes-neurais/), caso ainda não tenha visto), as funções de ativação tem duas funções principais nas redes neurais:
+Intuitivamente, o *KNN* utiliza a máxima de que elementos com características similares, ou seja, elementos parecidos tendem a ter a mesma resposta. Isso faz sentido se pensarmos no nosso dia a dia: nossos amigos, familiares com quem temos mais afinidade (mais parecidos) tendem a ter as mesmas opiniões e interesses que nós. Uma outra forma de se lembrar da intuição desse algortimo é pela famosa frase:
 
-> 1. Na camada de saída, a função de ativação é utilizada para mapearmos a saída da combinação linear dos neurônios dessa camada para o domínio esperado;
-> 2. A funções de ativação introduzem não-linearidades nas camadas intermediárias que diminuem o viés do modelo como um todo.
+> "Diga-me com quem andas que te direi quem tu és"
 
-Certo ... Muito legal, mas o que isso significa na prática? Bom, o primeiro caso é mais fácil de entender: o que você acharia se eu te dissesse que um paciente tem uma probabilidade de 150% de ter câncer? Certamente você me diria que alguma coisa não está certa pois probabilidades tem que estar entre 0 e 100%. A pergunta é então: como eu consigo que minha rede neural entenda que todas as previsões que ela me dá tem que estar nesse intervalo? Como você deve ter imaginado, quem vem nos salvar são as funções de ativação. Podemos utilizá-las para mapear qualquer número que saia da combinação linear final dessa rede em um número no intervalo de 0 a 1, em que se a previsão for 1 indica uma probabilidade de 100%.
+Mas, mesmo com uma intuinção tão simples, os dois passos descritos acima deixam algumas dúvidas (Pare um pouco agora antes de prosseguir e veja se consegue pensar em alguma coisa que não está bem definida). Se você já fez sua reflexão, podemos prosseguir com as dúvidas que me vêem à mente:
 
-O segundo caso é um pouco mais complexo e vamos precisar da ajuda de algumas equações para entendê-lo. Se nos lembramos bem, a equação que mapeia as entradas $X$ (nossas variáveis explicativas) de uma camada da rede para a saída $O$ dessa camada é:
+- O que significa "sumarizar" as reposta dos vizinhos?
+- Como medimos o quão parecido dois elementos são?
+- Qual o melhor valor de *K*? O que muda quando temos um *K* muito pequeno ou muito grande?
 
-$$O_i = f(W_i^T X_i + b_i),$$
+Essas são as principais perguntas que pretendemos responder ao longo dessa nova série. Sem mais delongas, vamos ao que interessa!
 
-em que o sobrescrito *i* indica o número da camada na rede, *f* é a função de ativação, *b* é o chamado vetor de *bias* e $W_i$ são os pesos da combinação linear daquela camada. Vamos supor que a função *f* não exista mais:
 
-$$O_i = W_i^T X_i + b_i$$
+### Previsões
 
-E o que aconteceria se tivéssemos duas camadas consecutivas nesse formato? Vamos dar uma olhada:
+Pelo passo a passo, o *KKN* não possui uma etapa de treino propriamente dita, como as redes neurais, mas ainda queremos que ele nos dê uma previsão, certo? Um ponto importante aqui é que, apesar de não haver um treino explícito, ainda precisamos de um conjunto de dados de treino (dos quais sabemos as respostas) para conseguir realizar uma previsão para outros dados. O passo a passo do algoritmo é bem intuitivo sobre o que devemos fazer para obtermos essas previsão. Mesmo assim, existem alguma dúvidas no ar sobre como realmente fazer essa previsão nos dois passos. Aqui vamos inverter um pouco a ordem e começar falando sobre o passo 2: sumarizar as respostas dos vizinhos. Mas o que significa sumarizar as respostas? Quando utilizamos "sumarizar" estamos nos referindo ao fato de pegar um conjunto de pontos (as respostas dos vizinhos) e retornar um único número (a saída prevista). Vamos tratar esse assunto de dois pontos de vista: classificação e regressão.
 
-$$O_i = W_i^T X_i + b_i$$
+#### Classificação
 
-$$O_{i+1} = W_{i+1}^T O_i  + b_{i+1}= W_{i+1}^T (W_i^T X_i + b_i) + b_{i+1}$$
+Começaremos falando sobre classificação. Só recapitulando um pouco, quando nos referimos à "classificação" queremos dizer que nosso problema nos pede para prever uma saída discreta, também chamadas de classes. Por exemplo, se temos uma imagem e queremos saber se trata-se de um cachorro, um gato ou um passáro, esses são os únitos 3 valores que podemos admitir na saída. Outro exemplo clássico é quando temos um e-mail e queremos saber se é um *spam* ou não.
 
-$$O_{i+1} = (W_{i+1}^T W_i^T) X_i + (W_{i+1}^T b_i + b_{i+1})$$
+Nesse cenário, o modo mais intuitivo de fazer a sumarização é simplemente contando quantos elementos de cada classe são meus vizinhos. A classe com mais vizinhos será a nossa previsão. 
 
-$$O_{i+1} = W^{\prime T}_{i+1} X_i + b^\prime_{i+1}$$
+Vamosa usar o exemplo do *spam* aqui. Suponha que tenhamos um conjunto de e-mails que já sabemos se são *spam* (verdes) ou não (vermelhos). Quando o novo e-mail $A$ chega, queremos saber se ele é ou não *spam*. Para isso procuramos os e-mails mais parecidos com $A$ e vemos suas repostas. A imagem a seguir pode ajudar a entendermos melhor
 
-Olhando a última equação acima, podemos ver que a saída da segunda camada nada mais é do que uma combinação linear das entradas da primeira. E isso significa o que exatamente? Significa que, não importam quantas camadas minha rede tenha, a saida dela será sempre uma combinação linear das entradas da rede. Seria a mesma coisa que ter apenas uma camada na rede, o que não é muito legal. Para uma explicação com um pouco mais de detalhes, vocês podem dar uma olhada no link do artigo.
-
-### E agora? O que eu uso?
-
-Muito legal, entendemos o porquê de utilizarmos as funções de ativação, mas quais funções eu posso utilizar e qual é mais indicada para cada cenário?
-
-Na teoria, qualquer função diferenciável ([aqui](https://www.youtube.com/watch?v=zHjJ5t7jadI) tem uma explicação bem legal sobre o assunto) pode ser utilizada. Vamos ver até que funções que não são diferenciáveis, mas que são diferenciáveis "por partes" podem ser utilizadas (mas sem *spoilers* por agora, já chegamos lá).
-
-#### Sigmóide
-
-$$\sigma(x) = \frac{1}{1 + e^{-x}}$$
-
-Também conhecida como função logística, a função sigmóide é uma das funções de ativação mais utilizadas em redes neurais, principalmente em camadas finais. Será que só de olhar para a forma dessa função você consegue dizer qual a propriedade mais importante dela?
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_01.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_01.png" width="1500px" height="400px"/> 
 </center>
 
-Se você disse que é porque ela limita a saída entre 0 e 1, você acertou! A função sigmóide é muito utilizada em camadas finais da rede para problemas de classificação, justamente porque ela garante que a saída sempre será um valor entre 0 (classe negativa) e 1 (classe positiva). Mas você pode se perguntar, por que não apenas colocar um limitante em 0 e em 1 como na função abaixo (vamos nos referir a ela como *clip*)?
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_02.png" width="800px" height="400px">
+Podemos também ir um pouco mais além e dizer também qual a probabilidade daquele e-mail ser *spam*. Em vez de apenas pegar a classe com mais representantes, vamos agora analisar a quantidade de vizinhos de cada classe dentre os K mais próximos. Matematicamente, podemos escrever essa probabilidade como:
+
+$$ P(Y=j|X=x_A) = \frac{1}{K} \sum_{i \in N_A} I(y_i = j)$$
+
+Espera um pouco! Estavámos falando aqui de vizinhos, com imagens bonitinhas e agora temos essa equação feia? Em uma primeira olhada ela pode parecer realmente estranha, mas vamos analisá-la com mais calma. Primeiro algumas definições:
+
+- $x_A$: conjunto de características do ponto A;
+- $P(Y=j|X=x_A)$: probabilidade do ponto A pertencem à classe *j*;
+- $K$: quantidade de vizinhos que estamos analisando;
+- $N_A$: conjunto dos $K$ vizinhos do ponto A;
+- $I(y_i = j)$: função que retorna o valor 1, se o ponto $x_i \in N_A$ pertencer à classe *j* ($y_i = j$), e 0, caso contrário.
+
+Começando pela parte do somatório: para cada um dos vizinhos do ponto A, verificamos se ele percentece à classe *j*. Caso ele pertença, o valor do somatório é acrescido de 1. Caso ele não pertença, o somatório continua com o mesmo valor. Ou seja, o somatório indica quantos dos *K* vizinhos pertencem à classe *j*. Quando dividimos por $K$, o que estamos fazendo é encontrar a proporção de vizinhos que pertencem à classe *j*. É essa proporção que vamos considerar como a nossa probabilidade.
+
+De novo, vamos recorrer às imagens para trazer um entendimento melhor.
+
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_02.png" width="1500px" height="400px"/> 
 </center>
 
-Para responder essa pergunta, temos que que voltar desta vez ao segundo artigo desta série (você pode dar uma conferida [aqui](https://matheusjorge.github.io/ensinando-redes-neurais/)). Nós havíamos encontrado uma equação para o cálculo do gradiente descendente que tinha a seguinte forma:
+Que legal! Conseguimos até estimar as probabilidades de pertencimento à determinada classe, mas aqui vou levantar outro questionamento (lá vem ele de novo): o que acontece com a noção de distância mesmo entre os vizinhos? Nos nossos exemplos, os vizinhos mais próximos do ponto A são da classe 0, mas mesmo assim, quando escolhemos $K=5$, a previsão que temos é da classe 1. Dessa forma, descartamos totalmente a informação das diferentes distâncias e tratamos todos os vizinhos como iguais.
 
-$$\frac{\partial \mathscr{L}}{\partial w} = \frac{\partial \mathscr{L}}{\partial ŷ}f^\prime(z) x, onde$$
+Uma forma de considerarmos essa relação entre os vizinhos é atribuindo um peso $w_i$ ao voto de cada vizinho. 
 
-$$ŷ = f(z)$$
+$$P(Y=j|X=x_A) = \frac{\sum_{i \in N_A} w_i I(y_i = j)}{\sum_{i \in N_A} w_i}$$
 
-$$ z = w*x + b $$
+Uma maneira simples de fazer isso é considerando o inverso da distância entre os pontos:
 
-Podemos ver então que o gradiente da função de custo depende da derivada da função de ativação. Portanto, para escolher uma função de ativação, também temos que analisar como a derivada dela se comporta para entendermos melhor como o erro será propagado pela rede. 
+$$w_i = \frac{1}{d(x_A,x_i)}$$
 
-Vamos comparar então as duas funções que mostramos até agora, começando pela função *clip*. Um importante conceito que temos que relembrar para tornar nossa análise mais intuitiva é que a derivada de uma função escalar (que recebe um único número e retorna um único número) pode ser interpretada como a inclinação da curva em determinado ponto. Dessa forma, quando *z* for menor que 0 ou maior que 1, a derivada será igual a 0, pois as curvas são retas na horizontal. Já entre 0 e 1 a função tem a forma $f(z) = z$, e podemos concluir que a inclinação da curva é 1. Matematicamente, podemos escrever
+na qual $d$ é uma medida de distância entre as amostras. Novamente, a equação pode parecer complicada, mas na verdade o que estamos fazendo é dar um valor ao voto de cada vizinho, em vez de sempre considerar esse valor 1.
 
-$$
-f^\prime(z) = 
-  \begin{cases} 
-      1 & \textrm{se } 0 \leq z \leq 1, \\
-      0 & \textrm{c.c.}
-  \end{cases}
-$$
+Os dados do nosso exemplo são os seguintes, já com distâncias e pesos calculados para o nosso exemplo alvo $x_A = (0;0)$
 
-Perceba que a função *clip* possui dois "bicos", em 0 e 1, o que significaria que a derivada não existe nesses pontos. Porém, para conseguirmos utilizar essa função, vamos assumir que em ambos os pontos, a derivada é igual a 1. Visualmente, temos o seguinte gráfico:
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_03.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_tabela_01.png" width="600px" height="400px"/> 
 </center>
 
-O grande problema dessa função é que se a saída da minha combinação linear for maior que 1 ou menor que 0 (o que é possível de acontecer dado o erro que a rede pode apresentar), $f^\prime(z) = 0$, o que implica $\frac{\partial \mathscr{L}}{\partial w} = 0$. Tá ... mas na prática, por que isso importa pra mim? Porque quando esse gradiente vai para 0, o erro referente a essa amostra não vai ser utilizado para atualizar o peso, e muito provavelmente vamos continuar errando.
+Com isso, podemos estimar as novas probabilidades:
 
-Isso não parece muito promissor, não é mesmo? Vamos olhar então a derivada da sigmóide. Aqui vamos recorrer a uma abordagem menos geométrica para encontrar a derivada. Vamos utilizar então a regra do quociente (a demonstração está escondida para não tornar o texto muito denso):
-
-<details>
-    <summary>Demonstração - Derivada Sigmóide</summary>
-
-$$\frac{d \sigma(x)}{dx} = \frac{d\frac{1}{dx} \times 1+e^{-x} - 1 \times \frac{d 1+e^{-x}}{dx}}{(1+e^{-x})^2}$$
-
-$$\frac{d \sigma(x)}{dx} = \frac{e^{-x}}{(1+e^{-x})^2}$$
-
-$$\frac{d \sigma(x)}{dx} = \frac{1}{1+e^{-x}} (\frac{\color{red}{1-1}+e^{-x}}{1+e^{-x}})$$
-
-$$\frac{d \sigma(x)}{dx} = \sigma(x) (\frac{\color{red}{1}+e^{-x}}{1+e^{-x}} + \frac{\color{red}{-1}}{1+e^{-x}})$$
-</details>
-
-$$\frac{d \sigma(x)}{dx} = \sigma(x) (1 - \sigma(x))$$
-
-E voilá! Temos nossa equação para a derivada da sigmóide. Vamos olhar agora como ela se comporta graficamente:
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_04.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_03.png" width="1500px" height="400px"/> 
 </center>
 
-Comparando as duas curvas, podemos perceber que ambas, em algum momento, chegam a 0. A diferença entre elas está em como elas chegam e em quais valores de $x$. A derivada da sigmóide tem uma forma muito mais suave, e o que eu quero dizer com isso é que ela vai chegando a 0 aos poucos, enquanto a derivada da função *clip* tem uma mudança abrupta de 1 para 0. Além disso, no gráfico acima podemos observar que mesmo quando $x=-5$, por exemplo, a derivada da sigmóide não é zero. Isso nos auxilia na propagação do gradiente para as outras camadas da rede.
+#### Regressão
 
-### Tangente Hiperbólica
+Agora que já vimos como a classificação é feita, vamos dar uma olhada no nosso outro tipo de problema: a regressão. A diferença para a classifcação é que agora queremos prever uma variável contínua. Por exemplo, podemos querer saber o preço de uma casa dada a sua área e a sua localização ou saber a temperatura de uma cidade da qual não temos medições baseado nas cidades vizinhas.
 
-$$\tanh(x) = \frac{e^{x} - e^{-x}}{e^{x} + e^{-x}}$$
+A abordagem de usar a moda agora não é mais adequada, pois muito provavelmente as respostas não serão mais repetidas, uma vez que eles podem assumir uma quantidade muito maior de valores. Uma solução é usar a média das respostas dos vizinhos. Vamos usar o exemplo da temperatura para ilustrar esses conceitos.
 
-Vamos tratar agora de outra função de ativação muito comum, chamada **tangente hiperbólica**. Mas por que vamos querer utilizar outra função que não a sigmóide se já vimos que ela atende todas as nossas necessidades? A explicação é que a sigmóide é muito boa na camada final da rede, muito pela restrição da saída entre 0 e 1. Mas no interior da rede essa propriedade não é importante e existem outras funções que nos ajudam a propagar o gradiente de forma mais eficiente, uma delas sendo a tangente hiperbólica. Vamos dar uma olhada em como ela se comporta.
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_05.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_04.png" width="1500px" height="400px"/> 
 </center>
 
-Pelo gráfico acima, a tangente hiperbólica tem uma forma muito parecida com a sigmóide. A principal diferença entre as duas é que a tangente hiperbólica tem valor mínimo -1, em vez de 0. Mas como isso ajudaria na propagação dos erros? Lembra que comentamos que a derivada pode ser vista como a inclinação da curva? O que acontece é que a tangente hiperbólica sai de -1 para chegar até 1 em um intervalo menor do que a sigmóide sai de 0 para chegar a 1. Isso significa que a inclinação da tangente hiperbólica tende a ser maior do que a da sigmóide, facilitando a atualização dos pesos. 
+Perceba que nenhum dos vizinhos tem exatamente a mesma temperatura e, por isso, não podemos usar a moda. Mas porque usar a média então? Porque não o valor máximo? Ou o valor mínimo? Essa escolha é feita pelo fato de que a média de um conjunto de pontos é o valor que minimiza o **erro quadrático médio** (*MSE*, do inglês *mean squared error*):
 
-Vamos encontrar a expressão da derivada da tangente hiperbólica primeiro e em seguida vamos comparar as duas curvas para vermos mais claramente a diferença entre elas. Aqui vamos seguir a mesma lógica de cálculo da derivada da sigmóide, utilizando a regra do quociente (novamente vamos omitir a demonstração mas, para quem quiser, é só clicar no botão):
+$$ \frac{1}{n}\sum_{i=1}^{n} (x_i - \hat{x})^2 $$
 
-<details>
-    <summary>Demonstração - Derivada Tangente Hiperbólica</summary>
+Visualmente, podemos ver como esse varia quando utilizamos outros valores para a previsão. Em nenhum caso retratado na imagem a baixo conseguiríamos um erro menor do que a precisão dada pela média.
 
-$$\frac{d \tanh(x)}{dx} = \frac{\frac{d e^{x} - e^{-x}}{dx} \times (e^{x} + e^{-x}) - (e^{x} - e^{-x}) \times \frac{de^{x} + e^{-x}}{dx}}{(e^{x} + e^{-x})^2}$$
-
-$$\frac{d \tanh(x)}{dx} = \frac{(e^{x} + e^{-x}) \times (e^{x} + e^{-x}) - (e^{x} - e^{-x}) \times (e^{x} - e^{-x})}{(e^{x} + e^{-x})^2}$$
-
-$$\frac{d \tanh(x)}{dx} = \frac{(e^{x} + e^{-x})^2  - (e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2}$$
-
-$$\frac{d \tanh(x)}{dx} = \frac{(e^{x} + e^{-x})^2}{(e^{x} + e^{-x})^2} - \frac{(e^{x} - e^{-x})^2}{(e^{x} + e^{-x})^2}$$
-</details>
-
-$$\frac{d \tanh(x)}{dx} = 1 - \tanh(x)^2$$
-
-Ótimo! Agora que já temos a nossa expressão, vamos plotar o gráfico das duas derivadas juntas.
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_06.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_05.png" width="800px" height="400px"/> 
 </center>
 
-Agora sim podemos ter uma boa visão de como as derivadas sem comportam de forma diferente. Embora a derivada da tangente hiperbólica (curva em verde) vá para 0 mais rapidamente que a derivada da sigmóide (curva em vermelho/laranja), o valor dela entre -1 e 1 supera, e muito, o valor da sigmóide. Dessa forma, fica claro que os erros são melhor propagados pela tangente hiperbólica.
+Mas e se não quisermos minimizar o *MSE*? Nesse caso podemos escolher o valor que melhor se adequa à função de erro de nosso interesse. Por exemplo, caso escolhessemos a **mediana**, estaríamos minimizando o **erro absoluto médio** (*MAE*, do inglês *mean absolute error*):
 
-### ReLU
+$$\frac{1}{n}\sum_{i=1}^{n} |x_i - \hat{x}| $$
 
-$$ReLU(x) = max(0, x)$$
+Vamos ver como ficariam as previsões nesse caso:
 
-Chegamos agora à última função que vamos abordar nesse artigo, a chamada **ReLU** (do inglês, *Rectfied Linear Unit*). O comportamento da ReLU é bastante curioso quando a comparamos com as outras funções vistas até agora: ela é basicamente a própria combinação linear quando ela é maior ou igual à 0, e é sempre 0 quando a combinação linear é menor que 0.
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_07.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_06.png" width="1500px" height="400px"/> 
 </center>
 
-Mas qual a vantagem de utilizar essa função em vez de alguma outra que já vimos? E sendo ela uma função basicamente linear não cairíamos no mesmo problema de não ter função de ativação?
+Novamente, podemos checar se realmente nossa afirmação é verdadeira graficamente:
 
-Vamos começar pela segunda pergunta: não, não teremos esse problema. Apesar de a ReLU parecer linear, o fato de que limitamos em 0 faz com que ela não seja. Isso é suficiente para garantir que temos então uma função de ativação que funciona. Para verificar a primeira questão vamos analisar o gráfico da derivada da ReLU. Seguindo o mesmo raciocínio de como calculamos a derivada da função *clip*, a expressão para a derivada da ReLU é:
-
-$$
-ReLU^\prime(x) = 
-  \begin{cases} 
-        1 & \textrm{se } x \lt 0, \\
-        0 & \textrm{c.c.}
-  \end{cases}
-$$
-
-Graficamente então temos:
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_08.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_07.png" width="800px" height="400px"/> 
 </center>
 
-Podemos ver que qualquer valor menor ou igual que 0 tem derivada igual a 0, ou seja, o erro não é propagado. Mas quando analisamos os valores acima de 0, vemos que a derivada é sempre igual a 1. A derivada da tangente hiperbólica também tinha um valor de pico em 1, mas era um valor pontual, conforme íamos para a direita ou para a esquerda esse valor ia diminuindo.
+Por fim, vamos fazer exatamente o que fizemos no caso da classificação de incluir um peso para a contrinbuição de cada vizinho, baseado na distância entre o meu ponto alvo e cada um deles. A motivação é exatamente a mesma também: vizinhos mais distantes deveriam ter um peso menor na minha resposta do que vizinhos mais próximos. 
 
-### Dissipação do gradiente
+Para facilitar um pouco, vamos dizer que os pontos estão nas mesmas posições em que estavam no problema de classificação. Dessa forma, a tabela que mostramos acima continua valendo, assim como o peso de cada amostra. 
 
-Até agora, falamos muito que era interessante que as derivadas das funções de ativação fossem mais altas porque isso ajudava a propagar o erro pela rede, mas qual a intuição por trás disso? Lembre-se que o segredo por trás do gradiente descendente é a regra de cadeia aplicada em cada camada da rede. Isso significa que a expressão do gradiente para determinada camada é a multiplicação do gradiente de todas as camadas superiores a ela com as derivadas relativas àquela camada. Dessa forma, fazendo algumas simplificações de notação, podemos escrever para uma rede de 2 camadas:
-
-$$ \frac{\partial \mathscr{L}}{\partial w_1} = f_2^\prime(z_2)f_1^\prime(z_1) U,$$
-
-em que $U$ são os outros termos da equação que não as derivadas das funções de ativação. Se tivessemos 3 camadas:
-
-$$ \frac{\partial \mathscr{L}}{\partial w_1} = f_3^\prime(z_3)f_2^\prime(z_2)f_1^\prime(z_1) U$$
-
-Podemos ver então que a cada nova camada, um novo termo é adicionado. Mas o que acontece se esses termos forem muito pequenos (entre 0 e 1)? Bom quanto mais termos pequenos, menor será o resultado da multiplicação. Isso significa que as camadas mais próximas da entrada da rede possuem um gradiente muito pequeno, fazendo que com os pesos sejam atualizados de maneira muito leve ou nem sejam atualizados! Esse problema é conhecido como **dissipação do gradiente** (do inglês, *vanishing gradient*). Vamos fazer uma simulação bem simples para fixar a ideia. 
-
-Suponha que tenhamos uma rede com 10 camadas, e que (por um sinal do destino) todas as combinações lineares dessas camadas dêem como resultado *0,5*. Vamos simular 3 redes, uma com cada função de ativação que vimos. Gráfico abaixo mostra como o termo com as multiplicações das derivadas das funções de ativação (que aqui chamamos de $M$) se comporta em cada uma das camadas.
-
-<center>
-<img src="{{ site.baseurl }}/assets/img/uploads/func_ativ_09.png" width="800px" height="400px">
+<center> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_08.png" width="1500px" height="400px"/> 
 </center>
-
-A curva da sigmóide cai rapidamente para 0, indicando que todas as camadas abaixo da camada 7/8 não terão seus pesos atualizados. Já a tangente hiperbólica possui um comportamento melhor, sendo que em 10 camadas ela ainda não convergiu para zero. Por esse motivo, ela é mais utilizada nas camadas intermediárias do que a sigmóide. Mas conforme aumentamos o número de camadas, a tendência é que ela também vá para 0. Finalmente, a ReLU apresenta um comportamento totalmente constante: independente da camada $M=1$, o que facilita a propagação do erro em camadas menos profundas.
 
 ### Conclusão
 
-Hoje falamos sobre a importância das funções de ativação, mostramos alguns exemplos muito utilizados e as características que as fazem serem escolhidas em diversos contextos. Entretanto, esses foram só alguns exemplos. Existem diversas funções de ativação que podem ser melhores dependendo do tipo de problema (por exemplo, *softmax*, *leaky-relu*, *gelu*, etc.). Também comentamos sobre o problema de dissipação do gradiente, mas existe o problema oposto: **explosão do gradiente** (do inglês, *exploding gradient*), em que a multiplicação leva a valores muito grandes. Todos esses são problemas que valem ser explorados, caso tenham interesse.
+Wow, foi muita coisa não é mesmo? Vimos um pouco da intuição por trás do KNN, alguns conceitos mais teóricos sobre a nomenclatura de parâmetros e hiper-parâmetros e como o *KNN* realiza previsões, tanto para problemas de classificação quanto de regressão. Apesar de denso, espero que o conteúdo tenha sido proveitoso. 
 
-### E agora?
-
-Esse foi o último artigo dessa primeira série sobre redes neurais. Ainda pretendo escrever mais sobre outros tipos de redes, como as redes recorrentes, redes convolucionais e transformers, mas elas serão escritas em séries separadas. Também pretendo falar sobre outros algoritmos de aprendizado de máquina em séries futuras. Espero que tenham gostado do conteúdo desses primeiro artigos e fiquem ligados: em breve teremos novos conteúdos para vocês!
+O próximo artigo vai tentar responder a questão sobre qual é o número ideal de vizinhos e fazeremos uma discussão sobre dois conceitos fundamentais em aprendizado de máquina: viés e variância. Até lá, pessoal!

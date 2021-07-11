@@ -45,7 +45,7 @@ Nesse cenário, o modo mais intuitivo de fazer a sumarização é simplemente co
 Vamos usar o exemplo do *spam* aqui. Suponha que tenhamos um conjunto de e-mails que já sabemos se são *spam* (verdes) ou não (vermelhos). Quando o novo e-mail $A$ chega, queremos saber se ele é ou não *spam*. Para isso procuramos os e-mails mais parecidos com $A$ e vemos suas repostas. A imagem a seguir pode ajudar a entendermos melhor:
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_01.png" width="1000px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_01.png" width="1000px" height="300px"/> 
 </center>
 
 Podemos também ir um pouco mais além e dizer também qual a probabilidade daquele e-mail ser *spam*. Em vez de apenas pegar a classe com mais representantes, vamos agora analisar a quantidade de vizinhos de cada classe dentre os K mais próximos. Matematicamente, podemos escrever essa probabilidade como:

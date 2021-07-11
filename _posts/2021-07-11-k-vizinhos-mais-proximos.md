@@ -65,7 +65,7 @@ Começando pela parte do somatório: para cada um dos vizinhos do ponto A, verif
 De novo, vamos recorrer às imagens para trazer um entendimento melhor.
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_02.png" width="1000px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_02.png" width="1000px" height="300px"/> 
 </center>
 
 Que legal! Conseguimos até estimar as probabilidades de pertencimento à determinada classe, mas aqui vou levantar outro questionamento (lá vem ele de novo): o que acontece com a noção de distância mesmo entre os vizinhos? Nos nossos exemplos, os vizinhos mais próximos do ponto A são da classe 0, mas mesmo assim, quando escolhemos $K=5$, a previsão que temos é da classe 1. Dessa forma, descartamos totalmente a informação das diferentes distâncias e tratamos todos os vizinhos como iguais.
@@ -89,7 +89,7 @@ Os dados do nosso exemplo são os seguintes, já com distâncias e pesos calcula
 Com isso, podemos estimar as novas probabilidades:
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_03.png" width="1000px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_03.png" width="1000px" height="300px"/> 
 </center>
 
 #### Regressão
@@ -99,7 +99,7 @@ Agora que já vimos como a classificação é feita, vamos dar uma olhada no nos
 A abordagem de usar a moda agora não é mais adequada, pois, muito provavelmente, as respostas não serão mais repetidas, uma vez que eles podem assumir uma quantidade ilimitada de valores. Uma solução é usar a média das respostas dos vizinhos. Vamos usar o exemplo da temperatura para ilustrar esses conceitos.
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_04.png" width="1000px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_04.png" width="1000px" height="300px"/> 
 </center>
 
 Perceba que nenhum dos vizinhos tem exatamente a mesma temperatura e, por isso, não podemos usar a moda. Mas porque usar a média então? Porque não o valor máximo? Ou o valor mínimo? Essa escolha é feita pelo fato de que a média de um conjunto de pontos é o valor que minimiza o **erro quadrático médio** (*MSE*, do inglês *mean squared error*):
@@ -119,7 +119,7 @@ $$\frac{1}{n}\sum_{i=1}^{n} |x_i - \hat{x}| $$
 Vamos ver como ficariam as previsões nesse caso:
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_06.png" width="1000px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_06.png" width="1000px" height="300px"/> 
 </center>
 
 Novamente, podemos checar graficamente que nossa afirmação é verdadeira:
@@ -133,7 +133,7 @@ Por fim, vamos fazer exatamente o que fizemos no caso da classificação e inclu
 Para facilitar um pouco, vamos dizer que os pontos estão nas mesmas posições em que estavam no problema de classificação. Dessa forma, a tabela que mostramos acima continua valendo, assim como o peso de cada amostra. 
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_08.png" width="1000px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_08.png" width="1000px" height="300px"/> 
 </center>
 
 ### Conclusão

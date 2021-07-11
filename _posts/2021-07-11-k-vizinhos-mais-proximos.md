@@ -78,7 +78,7 @@ Uma maneira simples de fazer isso é considerando o inverso da distância entre 
 
 $$w_i = \frac{1}{d(x_A,x_i)}$$
 
-na qual $d$ é uma medida de distância entre as amostras. Novamente, a equação pode parecer complicada, mas na verdade o que estamos fazendo é dar um valor ao voto de cada vizinho, em vez de sempre considerar esse valor 1.
+na qual $d$ é uma medida de distância entre as amostras. Novamente, a equação pode parecer complicada mas, na verdade, o que estamos fazendo é dar um valor ao voto de cada vizinho, em vez de sempre considerar esse valor 1.
 
 Os dados do nosso exemplo são os seguintes, já com distâncias e pesos calculados para o nosso exemplo alvo $x_A = (0;0)$
 
@@ -89,55 +89,55 @@ Os dados do nosso exemplo são os seguintes, já com distâncias e pesos calcula
 Com isso, podemos estimar as novas probabilidades:
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_03.png" width="1500px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_03.png" width="1200px" height="400px"/> 
 </center>
 
 #### Regressão
 
 Agora que já vimos como a classificação é feita, vamos dar uma olhada no nosso outro tipo de problema: a regressão. A diferença para a classifcação é que agora queremos prever uma variável contínua. Por exemplo, podemos querer saber o preço de uma casa dada a sua área e a sua localização ou saber a temperatura de uma cidade da qual não temos medições baseado nas cidades vizinhas.
 
-A abordagem de usar a moda agora não é mais adequada, pois muito provavelmente as respostas não serão mais repetidas, uma vez que eles podem assumir uma quantidade muito maior de valores. Uma solução é usar a média das respostas dos vizinhos. Vamos usar o exemplo da temperatura para ilustrar esses conceitos.
+A abordagem de usar a moda agora não é mais adequada, pois, muito provavelmente, as respostas não serão mais repetidas, uma vez que eles podem assumir uma quantidade ilimitada de valores. Uma solução é usar a média das respostas dos vizinhos. Vamos usar o exemplo da temperatura para ilustrar esses conceitos.
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_04.png" width="1500px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_04.png" width="1200px" height="400px"/> 
 </center>
 
 Perceba que nenhum dos vizinhos tem exatamente a mesma temperatura e, por isso, não podemos usar a moda. Mas porque usar a média então? Porque não o valor máximo? Ou o valor mínimo? Essa escolha é feita pelo fato de que a média de um conjunto de pontos é o valor que minimiza o **erro quadrático médio** (*MSE*, do inglês *mean squared error*):
 
 $$ \frac{1}{n}\sum_{i=1}^{n} (x_i - \hat{x})^2 $$
 
-Visualmente, podemos ver como esse varia quando utilizamos outros valores para a previsão. Em nenhum caso retratado na imagem a baixo conseguiríamos um erro menor do que a precisão dada pela média.
+Visualmente, podemos ver como o erro varia quando utilizamos outros valores para a previsão. Em nenhum caso retratado na imagem abaixo conseguiríamos um erro menor do que a previsão dada pela média.
 
 <center> 
     <img src="{{ site.baseurl }}/assets/img/uploads/knn_05.png" width="800px" height="400px"/> 
 </center>
 
-Mas e se não quisermos minimizar o *MSE*? Nesse caso podemos escolher o valor que melhor se adequa à função de erro de nosso interesse. Por exemplo, caso escolhessemos a **mediana**, estaríamos minimizando o **erro absoluto médio** (*MAE*, do inglês *mean absolute error*):
+Mas e se não quisermos minimizar o *MSE*? Nesse caso podemos escolher o valor que melhor se adequa à função de erro de nosso interesse. Por exemplo, caso escolhêssemos a **mediana**, estaríamos minimizando o **erro absoluto médio** (*MAE*, do inglês *mean absolute error*):
 
 $$\frac{1}{n}\sum_{i=1}^{n} |x_i - \hat{x}| $$
 
 Vamos ver como ficariam as previsões nesse caso:
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_06.png" width="1500px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_06.png" width="1200px" height="400px"/> 
 </center>
 
-Novamente, podemos checar se realmente nossa afirmação é verdadeira graficamente:
+Novamente, podemos checar graficamente que nossa afirmação é verdadeira:
 
 <center> 
     <img src="{{ site.baseurl }}/assets/img/uploads/knn_07.png" width="800px" height="400px"/> 
 </center>
 
-Por fim, vamos fazer exatamente o que fizemos no caso da classificação de incluir um peso para a contrinbuição de cada vizinho, baseado na distância entre o meu ponto alvo e cada um deles. A motivação é exatamente a mesma também: vizinhos mais distantes deveriam ter um peso menor na minha resposta do que vizinhos mais próximos. 
+Por fim, vamos fazer exatamente o que fizemos no caso da classificação e incluir um peso para a contribuição de cada vizinho, baseado na distância entre o meu ponto alvo e cada um deles. A motivação é exatamente a mesma também: vizinhos mais distantes deveriam ter um peso menor na minha resposta do que vizinhos mais próximos. 
 
 Para facilitar um pouco, vamos dizer que os pontos estão nas mesmas posições em que estavam no problema de classificação. Dessa forma, a tabela que mostramos acima continua valendo, assim como o peso de cada amostra. 
 
 <center> 
-    <img src="{{ site.baseurl }}/assets/img/uploads/knn_08.png" width="1500px" height="400px"/> 
+    <img src="{{ site.baseurl }}/assets/img/uploads/knn_08.png" width="1200px" height="400px"/> 
 </center>
 
 ### Conclusão
 
-Wow, foi muita coisa não é mesmo? Vimos um pouco da intuição por trás do KNN, alguns conceitos mais teóricos sobre a nomenclatura de parâmetros e hiper-parâmetros e como o *KNN* realiza previsões, tanto para problemas de classificação quanto de regressão. Apesar de denso, espero que o conteúdo tenha sido proveitoso. 
+Wow, foi muita coisa não é mesmo? Vimos um pouco da intuição por trás do *KNN* e como ele realiza previsões, tanto para problemas de classificação quanto de regressão. Apesar de denso, espero que o conteúdo tenha sido proveitoso. 
 
 O próximo artigo vai tentar responder a questão sobre qual é o número ideal de vizinhos e fazeremos uma discussão sobre dois conceitos fundamentais em aprendizado de máquina: viés e variância. Até lá, pessoal!

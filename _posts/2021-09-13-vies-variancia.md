@@ -43,7 +43,7 @@ $$f \in \mathcal{F}_2 \Leftrightarrow f = \beta_0 + \beta_1*\text{area} + \beta_
 Perceba que, fazendo $\beta_3 = 0$, $\mathcal{F}_1$ e $\mathcal{F}_2$ seriam o mesmo conjunto. Isso quer dizer que todas as equações de $\mathcal{F}_1$ estão contidas em $\mathcal{F}_2$. Porém $\mathcal{F}_2$ pode ir ainda mais além: fazendo $\beta_3 \neq 0$, temos um conjunto ainda mais amplos de funções.
 
 <center> 
-    <img src="images/knn_hip_space.png" width="800px" height="300px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_hip_space.png" width="800px" height="300px"/> 
 </center>
 
 Quanto maior o número de funções que meu modelo puder assumir, menor é o seu **viés**, ou seja, eu estou fazendo menos suposições prévias sobre as relações dos dados. Voltando ao exemplo do modelo de Regressão Linear (ou seja, as funções do conjunto $\mathcal{F}_1$), eu assumo que
@@ -56,7 +56,7 @@ Se eu utilizar um modelo que possibilita que eu aprenda as funções de $\mathca
 Uma analogia que pode ser interessante para fixar o conhecimento é que o viés me diz o quão "cabeça dura" meu modelo é. Suponha que estamos viajando de carro e a pessoa que está dirigindo tem algumas suposições de como chegar até nosso destino. No meio do caminho temos várias placas indicando qual o melhor caminho. Podemos entender um modelo com alto viés como o motorista "cabeça dura" que ignora todas as placas e acredita que o melhor caminho é aquele que condiz com suas suposições prévias. Quanto mais o motorista seguir as placas, menos viés ele tem.
 
 <center> 
-    <img src="images/knn_vies_op1.jpg" width="800px" height="400px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_vies_op1.jpg" width="800px" height="400px"/> 
 </center>
 
 Olhando dessa forma pode parecer que sempre ter um viés menor é a melhor opção. Mas existe um problema: quanto menos suposições eu fizer sobre o meu modelo, a tendência é que esse modelo se torne mais complexos. Quando eu tenho modelos muito complexos eu preciso de muitos dados para ter uma estimativa precisa dos parâmetros.
@@ -71,7 +71,7 @@ Parece um sonho certo? Antes de sair tentando encontrar esse Santo Graal dos mod
 Como o modelo se ajusta perfeitamente aos dados, se treinarmos dois modelos diferentes $M_1$ e $M_2$ com cada um dos conjuntos, o modelo $M_1$ vai me dizer um preço (500 mil reais) e o modelo $M_2$ vai me dizer outro (450 mil reais). Mas qual dos dois está certo?
 
 <center> 
-    <img src="images/knn_variance_alex.png" width="800px" height="400px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_variance_alex.png" width="800px" height="400px"/> 
 </center>
 
 A resposta é: os dois. E nenhum. Como eu não assumi nada, o meu modelo faz o que ele pode com os dados que ele tem. Por esse motivo, eu tenho que passar uma grande quantidade de dados para ele, para cobrir todos os casos possíveis.
@@ -81,7 +81,7 @@ Essa mudança nos parâmetros e na previsão do modelo é chamada de **variânci
 Como todo mundo gosta de uma boa analogia, um modelo com alta variância é como aquela pessoa que não consegue se decidir nunca. Sempre que alguém fala alguma coisa diferente para ela, ela muda de opinião.
 
 <center> 
-    <img src="images/knn_variancia.jpg" width="800px" height="400px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_variancia.jpg" width="800px" height="400px"/> 
 </center>
 
 ### Trade-off
@@ -89,7 +89,7 @@ Como todo mundo gosta de uma boa analogia, um modelo com alta variância é como
 Normalmente temos que ponderar esses dois conceitos ao escolher um modelo. Modelos com baixo viés possuem muita variância enquanto modelos com alto viés possuem menor variância.
 
 <center> 
-    <img src="images/knn_11.png" width="800px" height="400px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_11.png" width="800px" height="400px"/> 
 </center>
 
 O ideal é evitar modelos nos dois extremos. Modelos com viés muito alto podem não se ajustar bem nem aos dados de treino, porque nossas suposições não condizem com a realidade dos dados. Nesse caso, temos o chamado sub-ajuste (do inglês *underfitting*).
@@ -103,13 +103,13 @@ Agora que entendemos o que é viés e variância, fica o questionamento: como is
 Vamos analisar um problema bem simples em que temos que prever se um apartamento tem alta procura no mercado (classe 1) ou não (classe 0), utilizando somente dados de latitude e longitude. Aqui estamos tratando de um problema de classificação, mas os resultados e conclusões são exatamente os mesmos para os problemas de regressão. Vamos dar uma olhada então nesses dados:
 
 <center> 
-    <img src="images/knn_09.png" width="800px" height="300px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_09.png" width="800px" height="300px"/> 
 </center>
 
 Olhando os dados não parece claro qual seria o valor adequado de K. Vamos então testar alguns valores e ver o que acontece. Na imagem abaixo, temos as fronteiras de decisão para 3 valores diferentes de K: 1, 10 e 50. O gráfico da fronteira de decisão nada mais é do que as regiões em que minhas predições são de cada uma das classes.
 
 <center> 
-    <img src="images/knn_10.png" width="1000px" height="300px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_10.png" width="1000px" height="300px"/> 
 </center>
 
 Observe como a fronteira de decisão quando K=1 é muito mais irregular do que quando K=50. Um modo de medir o viés e a variância de um modelo é justamente verificar visualmente quão irregular é essa fronteira. Isso pode parecer um pouco confuso, afinal falamos de viés e variância em termos de espaços de funções e no KNN não temos as funções definidas explicitamente.
@@ -119,7 +119,7 @@ Mesmo que as funções não sejam definidas analiticamente, todos os modelos no 
 Para ver como isso é verdade, vamos supor que temos um novo ponto da classe 1 observado e vamos retreinar o modelo com ele. A imagem abaixo mostra as novas fronteiras de decisão. Perceba como a inclusão de um único ponto alterou significativamente a fronteira para quando K=1, mas não para os outros valores. Entrentanto, valores menores de K parecem que se ajustam melhor aos dados
 
 <center> 
-    <img src="images/knn_10_1.png" width="1000px" height="300px"/> 
+    <img src="{ site.baseurl }}/assets/img/uploads/knn_10_1.png" width="1000px" height="300px"/> 
 </center>
 
 A partir da imagem a cima, podemos chegar a duas conclusões:

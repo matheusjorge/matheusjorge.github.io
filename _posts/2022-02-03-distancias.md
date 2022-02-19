@@ -1,5 +1,5 @@
 ---
-date: 2021-12-06
+date: 2022-02-03
 layout: post
 title: Distâncias
 description: "Depois de estudar sobre viés e variância vamos conhecer um pouco sobre outro conceito muito importante em aprendizado de máquina: distâncias"

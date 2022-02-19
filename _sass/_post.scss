@@ -65,9 +65,7 @@
   h6,
   ul,
   ol,
-  iframe,
-  details, 
-  summary {
+  iframe{
     @include center(rem(800px));
     @include mainFont(400);
     font-size: rem(17px);
@@ -154,8 +152,49 @@
     }
   }
 
+  summary {
+    text-decoration: underline;
+  }
+
   details {
+    border-radius: rem(10px);
+  }
+
+  details>summary {
+    color: #aaaaaa;
+    list-style-type: none;
+  }
+
+  details>summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details>summary::before {
+    content: '▶️ ';
+  }
+
+  details[open]>summary::before {
+    content: '▼ ';
+  }
+  
+  details ,
+  summary{
     cursor: pointer;
+    font-size: rem(12px);
+    @include center(rem(800px));
+    @include mainFont(400);
+    line-height: rem(30px);
+    letter-spacing: 0.025rem;
+    padding: 0 rem(20px);
+    margin: rem(20px) auto 0;
+    font-family: monospace ;
+
+    @include media(">=sm") {
+      font-size: rem(16px);
+      line-height: rem(40px);
+      margin: rem(29px) auto 0;
+    }
+    
   }
 
   li {

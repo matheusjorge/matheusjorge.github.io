@@ -33,6 +33,24 @@
   overflow-x: auto;
   padding: rem(40px) 0;
 
+  .code {
+    cursor: pointer;
+    font-size: rem(12px);
+    @include center(rem(800px));
+    @include mainFont(400);
+    line-height: rem(30px);
+    letter-spacing: 0.025rem;
+    padding: 0 rem(20px);
+    margin: rem(20px) auto 0;
+    font-family: monospace ;
+
+    @include media(">=sm") {
+      font-size: rem(16px);
+      line-height: rem(40px);
+      margin: rem(29px) auto 0;
+    }
+  }
+
   &.fullwidth {
     padding: rem(60px) rem(10px) 0;
   }
@@ -140,7 +158,7 @@
 
     code {
       font-size: rem(15px);
-      background: #282a36;
+      background: #33334D;
       color: #fff;
       word-wrap: break-word;
       padding: rem(3px) rem(5px);

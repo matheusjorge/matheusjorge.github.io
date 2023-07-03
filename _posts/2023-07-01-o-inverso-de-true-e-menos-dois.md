@@ -96,7 +96,7 @@ Calma que se você não entendeu nada aqui vai um pequeno resumo:
 - Cada 0 e 1 é chamado de bit;
 - Um conjunto de 8 bits (como nesse caso) é chamado de byte;
 - À direita temos o que chamamos de bit menos significativo (LSP, do inglês *Least Significant Bit*) e à esquerda temos o bit mais significativo (MSP, do inglês *Most Significant Bit*);
-- Cada bit representa um valor de potência de 2: começando mo LSP, que representa $2^0$ até o MSP que, nesse caso de 8 bits, representa $2^7$;
+- Cada bit representa um valor de potência de 2: começando no LSP, que representa $2^0$ até o MSP que, nesse caso de 8 bits, representa $2^7$;
 - O valor em decimal dessa representação é feita multiplicando o valor de cada bit pela potência que ele representa e somando tudo no final:
 <center> 
     <img src="{{ site.baseurl }}/assets/img/uploads/neg_bin_10_dark@2x.jpg" width="700px" height="300px"/> 
@@ -123,12 +123,12 @@ Então sempre que negamos um valor que o Python entende como `True` ele vai reto
     <img src="{{ site.baseurl }}/assets/img/uploads/neg_not_bool_int@2x.jpg" width="700px" height="300px"/> 
 </center>
 
-Já na negação *bitwise* temos dois estados possíveis para cada bit e a inversão é feita bit a bit. Ou seja, quando fazemos `~10`, o resultado que obtemos é 11110101, que é um valor diferente da representação binária de `False` (00000000), por exemplo.
+Já na negação *bitwise* temos dois estados possíveis para cada bit e a inversão é feita bit a bit. Ou seja, quando fazemos `~10` (lembrando que a representação binária de 10 é 00001010), o resultado que obtemos é 11110101, que é um valor diferente da representação binária de `False` (00000000), por exemplo.
 
 ### Voltando ao pandas
-Certo, agora que entendemos o que acontece com cada tipo de operação, podemos tentar entender o que o pandas está fazendo. Perceba que nossos dados originais eram do tipo `object`. Quando pedimos ao pandas para negar esse vetor de dados, ele não tem conhecimento de que se trata de um tipo de dados booleano e que a operação que deve ser feita na verdade é a negação lógica. Ele simplesmente entende que estamos tentando inverter cada bit do nossos dados. Já quando dizemos explicitamente que estamos lidando com dados booleanos ele consegue entender que a operação a ser aplicada deve ser a negação lógica e não a *bitwise*.
+Certo, agora que entendemos o que acontece com cada tipo de operação, podemos tentar entender o que o pandas está fazendo. Perceba que nossos dados originais eram do tipo `object`. Quando pedimos ao pandas para negar esse vetor de dados, ele não tem conhecimento de que se trata de um tipo de dados booleano, ele simplesmente entende que estamos tentando inverter cada bit do nossos dados. Já quando dizemos explicitamente que estamos lidando com dados booleanos ele consegue entender que a operação a ser aplicada deve ser a negação lógica e não a *bitwise*.
 
-Voilá! Já entendemos tudo que aconteceu e podemos dormir tranquilo, certo? Humm ... quase, mais ainda não! O leitor mais atento deve ter tentado imaginar o que seria a inversão *bitwise* de `True` e pode ter chegado em uma conclusão um pouco estranha. Dissemos que a representação binária de `True` é 00000001, então é lógico inferir que a negação *bitwise* the `True` (`~True`) tem representação 11111110. Se aplicarmos a mesma lógica de representação de binários que foi apresentada antes esse valor deveria ser equivalente a 254!!! Mas porque então, quando invertemos inicialmente, obtivemos o valor -2??
+Voilá! Já entendemos tudo que aconteceu e podemos dormir tranquilo, certo? Humm ... quase, mas ainda não! O leitor mais atento deve ter tentado imaginar o que seria a inversão *bitwise* de `True` e pode ter chegado em uma conclusão um pouco estranha. Dissemos que a representação binária de `True` é 00000001, então é lógico inferir que a negação *bitwise* the `True` (`~True`) tem representação 11111110. Se aplicarmos a mesma lógica de representação de binários que foi apresentada antes esse valor deveria ser equivalente a 254!!! Mas porque então, quando invertemos inicialmente, obtivemos o valor -2??
 
 <center> 
     <img src="{{ site.baseurl }}/assets/img/uploads/neg_bin_254_dark@2x.jpg" width="700px" height="300px"/> 
@@ -151,11 +151,14 @@ Indo um pouco mais além, podemos manipular a equação de representação para 
 
 $$ -(x+1) = \ \sim x$$
 
-E estamos chegando cada vez mais perto de entender o motivo de `~True = -2`! Se lembrarmos, `bin(True) = bin(1)`, então quando invertemos fazemos `~True` é a mesma coisa que fazer `~1` que, pela equação acima é justamente -2!!! Wow, finalmente chegamos ao real motivo de toda a nossa confusão!
+E estamos chegando cada vez mais perto de entender o motivo de `~True = -2`! Se lembrarmos, `bin(True) = bin(1)`, então quando invertemos fazemos `~True` é a mesma coisa que fazer `~1` que, pela equação acima é justamente -2!!!
+
+$$\sim \text{True} =\  \sim 1 =\ -(1+1) =\ -2$$
+
+Wow, finalmente chegamos ao real motivo de toda a nossa confusão!
 
 <center>
     <iframe src="https://giphy.com/embed/iVtxoVJyHC5FEfzWzp" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-    <p><a href="https://giphy.com/gifs/judgejudy-iVtxoVJyHC5FEfzWzp">via GIPHY</a></p>
 </center>
 
 Uma última dúvida que você deve estar na sua cabeça é como eu diferencio se um número é positivo ou negativo, se eles podem ter a mesma representação. A resposta pra essa pergunta vem do tipo de dados declarado. Por padrão, os inteiros em Python são o que chamamos de **número inteiro com sinal**, e seguem a lógica de representação que mostramos acima. Mas algumas bibliotecas como o numpy, permitem que você defina estruturas com **números inteiros sem sinal** e, nesse caso, a representação segue aquela primeira ideia apresentada, na qual só conseguimos obter números positivos.

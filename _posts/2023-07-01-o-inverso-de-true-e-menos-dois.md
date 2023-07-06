@@ -3,7 +3,7 @@ date: 2023-07-01
 layout: post
 title: O inverso de True é -2 e eu posso provar!
 description: "Vamos analisar um bug curioso em que ao inverter um DataFrame de booleanos obtivemos o valor -2, sob a ótica de como booleanos e valores inteiros são armazenados e como o Python lida com números negativos."
-image: https://matheusjorge.github.io/assets/img/posts/post9_quem_bate_sou_eu.jpg
+image: https://matheusjorge.github.io/assets/img/posts/post10_negacao_logica_vs_bitwise.jpg
 category: 'Artigo'
 math: true
 tags:

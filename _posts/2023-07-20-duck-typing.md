@@ -45,13 +45,13 @@ Perceba que não dissemos em nenhum momento no código qual o tipo de dado esper
 <div class="code">
 {% highlight python%}
 l = list(1, 2, 4)
-print_len(l)
+print_len(l)  # Esse objeto tem 3 elementos
 
 d = dict(key_1=1, key_2=2)
-print_len(l)
+print_len(d)  # Esse objeto tem 2 elementos
 
 s = "string"
-print_len(l)
+print_len(s)  # Esse objeto tem 7 elementos
 {% endhighlight %}
 </div>
 
@@ -117,7 +117,7 @@ Só um adendo antes de prosseguirmos: perceba que, logo depois do argumento `ani
 
 ### Vida de herdeiro
 
-Qual o problema desse código? Novamente, sempre que quisermos trabalhar um novo tipo de dado teremos que adicionar na função uma nova verificação, o que não é muito legal. Se você já estudou ou trabalhou com Programação Orientada a Objetos (POO), certamente tem um mente um solução baseada em herança: por que não criar uma classe abstrata (ou interface) comum à todas as outras classes que grasnam? Vamos ver como ficaria essa implementação:
+Qual o problema desse código? Novamente, sempre que quisermos trabalhar um novo tipo de dado teremos que adicionar na função uma nova verificação, o que não é muito legal. Se você já estudou ou trabalhou com Programação Orientada a Objetos (POO), certamente tem um mente um solução baseada em [herança](https://www.youtube.com/watch?v=nAdpEf9wZbQ): por que não criar uma classe abstrata (ou interface) comum à todas as outras classes que grasnam? Vamos ver como ficaria essa implementação:
 
 <div class="code">
 {% highlight python%}
@@ -157,7 +157,7 @@ Isso resolve nosso problema, pois agora tudo que temos que fazer é herdar essa 
 
 <div class="code">
 {% highlight python%}
-class Granso:
+class Ganso:
     def grasnar(self,):
         print("Quack! Eu sou um ganso")
         
@@ -207,9 +207,9 @@ Perceba que nem a classe `Pato` nem a classe `Ornitorrinco` estão diretamente a
 <div class="code">
 {% highlight python%}
 from abc import abstractmethod
-from typing import runtime_checkable, Protocol
+from typing import runtime_checkable, Protocol  # Importar runtime_checkable
 
-@runtime_checkable
+@runtime_checkable  # Adicionar decorator logo antes do protocolo
 class Grasnador(Protocol):
     @abstractmethod
     def grasnar(self, ):
@@ -236,6 +236,36 @@ def fazer_grasnar(animal: Grasnador):
 Pronto! Isso é o suficiente que a checagem aconteça em tempo de execução também! A vantagem que temos é que os programadores não tem mais que saber qual é a classe que eles devem herdar e nem se ela tem algum efeito colateral indesejado no seu código. Sabendo somente o que o objeto tem que fazer é suficiente para implementar uma nova classe totalmente compatível com o código atual. 
 
 > Obs: A checagem dinâmica tem algumas limitações. Quem quiser dar uma olhada sugiro ler a [PEP 544](https://peps.python.org/pep-0544/#runtime-checkable-decorator-and-narrowing-types-by-isinstance)
+
+### Voltando
+
+Vamos voltar ao exemplo com o tamanho de lista. A função `len` na verdade executa o método `__len__` do objeto passado para ela. É quase como se fosse assim:
+
+<div class="code">
+{% highlight python%}
+def len(obj):
+    return obj.__len__
+{% endhighlight %}
+</div>
+
+Então se quisermos que nossa função `print_len` funcione para qualquer objeto que funcione com a função `len` podemos criar um protocolo bem simples e alterar a checagem da nossa função:
+
+<div class="code">
+{% highlight python%}
+class ImplementaLen(Protocol):
+    def __len__(self,):
+        ...
+
+def print_len(obj: ImplementaLen):
+    if isinstance(obj, ImplementaLen):
+        print(f"Esse objeto tem {len(obj)} elementos")
+    else:
+        print(f"Tipo {type(obj)} não suportado")
+{% endhighlight %}
+</div>
+
+E voilá!
+
 
 ### Conclusão
 

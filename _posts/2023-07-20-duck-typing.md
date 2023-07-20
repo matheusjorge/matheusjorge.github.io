@@ -207,7 +207,7 @@ Perceba que nem a classe `Pato` nem a classe `Ornitorrinco` estão diretamente a
 <div class="code">
 {% highlight python%}
 from abc import abstractmethod
-from typing import runtime_checkacle, Protocol
+from typing import runtime_checkable, Protocol
 
 @runtime_checkable
 class Grasnador(Protocol):

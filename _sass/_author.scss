@@ -1,10 +1,16 @@
 .author {
-  background: rgba(1, 18, 48, 0.15);
+  background: rgba(1, 18, 48, 0.85);
   // background: $lightGray;
   display: table;
-  width: 100%;
+  // width: 100%;
   padding: rem(40px) 0;
   margin: rem(40px) 0;
+  @include center(rem(800px));
+  @include mainFont(400);
+  padding: 0 rem(20px);
+  margin: rem(20px) auto 0;
+  border-radius: 20px;
+
 
   @include media(">=sm") {
     padding: rem(50px) 0;
@@ -26,7 +32,8 @@
   }
 
   a {
-    fill: darken($lightGray, 30%);
+    // fill: darken($lightGray, 30%);
+    fill: #fff;
     text-decoration: none;
     border: none;
     transition: all 0.3s;
@@ -50,7 +57,7 @@
   }
 
   .def {
-    color: gray;
+    color: white;
     font-size: rem(18px);
     @include mainFont(300);
     margin: rem(10px);
@@ -66,7 +73,7 @@
     a {
       @include mainFont();
       text-decoration: none;
-      color: black;
+      color: white;
       font-size: rem(30px);
 
       @include media(">=sm") {
@@ -74,7 +81,7 @@
       }
 
       &:hover {
-        color: $texts;
+        color: $themeColor;
       }
     }
   }
@@ -84,6 +91,7 @@
     margin: rem(10px);
     font-size: rem(16px);
     line-height: rem(25px);
+    color: #f2f2f2;
 
     @include media(">=sm") {
       font-size: rem(18px);
